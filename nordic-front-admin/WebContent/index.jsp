@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	admin 페이지
+	admin 페이지 
 </body>
 </html>
