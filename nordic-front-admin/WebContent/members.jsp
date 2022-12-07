@@ -21,7 +21,6 @@
 
     function doDelete(member_code) {
         if(confirm(member_code+" 강제탈퇴 폼으로 이동합니다")) {
-            location.href="http://172.30.1.68:5500/member/modifyForm/"+member_code;
         }
     }
 
