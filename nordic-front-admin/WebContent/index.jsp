@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	admin 페이지 
+	<script>
+		location.href="members.jsp";
+	</script>
 </body>
 </html>
