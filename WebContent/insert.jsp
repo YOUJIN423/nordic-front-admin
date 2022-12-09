@@ -59,7 +59,7 @@
 						contentType : false,
 						cache : false,
 						success : function() {
-							location.href="list.jsp";
+							/* location.href="list.jsp"; */
 						},
 						error : function() {
 

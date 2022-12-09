@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,42 +11,44 @@
 <title>Insert title here</title>
 </head>
 <body>
-		<script>
-		function selectNum(test){
-			var n =test;
-			return n;
-		}
-      function paser(data) {
+	<script>
+
+		  
+      function paser(data,n) {
+    	  //last page 정해줌
+    	  let reallastpage = $("#endpage").val();
     	  (data[0].pagepart%8 === 0)? $("#endpage").val(parseInt(data[0].pagepart/8)) : $("#endpage").val(parseInt(data[0].pagepart/8+1));
-    	  
+    	  console.log("n = "+reallastpage);
+    	  let start =  ((n-1)*10)+1; 
     	  let lastpage = $("#endpage").val();
-    	  let start =  ((1-1)*10)+1;
+    	  
+    	 
     	  let end = start+9;
-    	  var pagestr = ""
+    	  var pagestr = "";
     	  var first = "";
 		  var last = "";
 		
     	  if(start>10){
-    		  first = first+ "<input type='button' onclick='changePage(1)' value='[처음]'><input type='button' onclick='changePage("+(start-10)+")' value='[이전]'>";  
+    		  first = first+ "<input type='button' onclick='changePage(1,1)' value='[처음]' /><input type='button' onclick='changePage("+(start-1)+","+(parseInt(start/8))+")' value='[이전]' />";  
     	  }
     	  if(end >=lastpage ){
     		  console.log("start1 : "+start);
     		  console.log("end1 : "+end);
     		  console.log("lastpage1 : "+lastpage);
     		  end = lastpage;
-    		  for(start ;start<=end ;start++ ){
-    			  pagestr = pagestr+"<input id='inputremote' type='button' onclick='changePage("+start+")' value='["+start+"]'>";
+    		  for(start ;start<=end ;start++){
+    			  pagestr = pagestr+"<input id='inputremote' type='button' onclick='changePage("+start+","+start+")' value='["+start+"]'>";
     		  }
     	  }else{
     		  for(start ;start<=end ;start++ ){
     		  console.log("start"+start);
     		  console.log("end"+end);
     		  console.log("lastpage"+lastpage);
-        		  pagestr = pagestr+"<input id='inputremote' type='button' onclick='changePage("+start+")' value='["+start+"]'>";
+        		  pagestr = pagestr+"<input id='inputremote' type='button' onclick='changePage("+start+","+start+")' value='["+start+"]'>";
     			}
     	  }
-    	  if(end>10){
-    		  last = last+ "<input type='button' onclick='changePage(1)' value='[끝]'>";  
+    	  if(end<reallastpage){
+    		  last = last+ "<input type='button' onclick='changePage("+lastpage+","+(parseInt(lastpage/8))+")' value='[다음]'>"+"<input type='button' onclick='changePage("+lastpage+","+(parseInt(lastpage/8))+")' value='[끝]'>";  
     	  }
     	  var total = first + pagestr + last;
     	  $("#testconter").html(total);
@@ -70,16 +73,15 @@
 			
             if (count < 5) {
          var row = $(".tableRow").append(
-                $("<td/>").append(
-                   "<pre><a href='missionDetail.jsp?mission_no="+mission_no+"'> <img style='max-width: 200px ; min-height: 200px' src='" +
-                  confirm_file2 +"'></a><br>미션명 : " +mission_name +"<br>기간 : "+start_date+"~"+end_date+"<br>난이도 : "+level_code+"<br>포인트 :"+point+"</pre>" 
+                $("<td/>").append(													
+                   "<pre><a href='missionDetail.jsp?mission_no="+mission_no+"'> <img style='max-width: 200px ; max-height: 200px' src='http://localhost/image/" +mission_no
+                  +"'></a><br>미션명 : " +mission_name +"<br>기간 : "+start_date+"~"+end_date+"<br>난이도 : "+level_code+"<br>포인트 :"+point+"</pre>" 
                 )
               );
             } else {
               var row2 = $(".tableRow2").append(
                 $("<td/>").append(
-                		  "<pre><a href=missionDetail.jsp?mission_no="+mission_no+"'> <img style='max-width: 200px ; min-height: 200px' src='C:\\Users\\hwangjoonsoung\\Desktop\\IntelliJ WorkSpace\\Nordic\\src\\main\\resources\\static\\img\\" +
-                          confirm_file +"'></a><br>미션명 : " +mission_name +"<br>기간 : "+start_date+"~"+end_date+"<br>난이도 : "+level_code+"<br>포인트 :"+point+"</pre>" 
+                		  "<pre><a href=missionDetail.jsp?mission_no="+mission_no+"'> <img style='max-width: 200px ; max-height: 200px' src='http://localhost/image/" +mission_no+"'></a><br>미션명 : " +mission_name +"<br>기간 : "+start_date+"~"+end_date+"<br>난이도 : "+level_code+"<br>포인트 :"+point+"</pre>" 
                 )
               );
             }
@@ -89,19 +91,20 @@
           $(".datatable").append(td);
         }
       }
+      //list 가장 첫 page
       function page(nowpage){
     	  var url = "http://localhost/list?pageNum="+nowpage;
           fetch(url)
             .then((response) => response.json())
-            .then((data) => paser(data));
+            .then((data) => paser(data,1));
       }
-      function changePage(nowpage){
+      function changePage(nowpage,start){
     	  $("td").remove();
     		
     	  var url = "http://localhost/list?pageNum="+nowpage;
           fetch(url)
             .then((response) => response.json())
-            .then((data) => paser(data) )
+            .then((data) => paser(data,start) )
           .then(() => console.log(nowpage))
       }
       
