@@ -1,35 +1,81 @@
-<!DOCTYPE html><%@ page language="java"
-	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68f650077e726d080433ae45c322df48"></script> 
-    <script>
-    function post() {
-        window.open("", "post", "width=200,height=300,scrollbars=yes");
-      }
-    </script>
-    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-    <script>
-      function openDaumPostcode() {
-        new daum.Postcode({
-          oncomplete: function (data) {
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-            // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
-            //				document.getElementById('join_zip1').value = data.postcode1;
-            //				document.getElementById('join_zip2').value = data.postcode2;
-            document.getElementById("post").value = data.zonecode;
-            document.getElementById("address").value = data.address;
-          },
-        }).open();
-      }
-    </script> -->
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68f650077e726d080433ae45c322df48&libraries=services,clusterer,drawing"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+	function post() {
+		window.open("", "post", "width=200,height=300,scrollbars=yes");
+	}
+</script>
+<script>
+	function openDaumPostcode() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				document.getElementById("zip_code").value = data.zonecode;
+				document.getElementById("address1").value = data.address;
+				$("#address2").focus();
+			},
+		}).open();
+	}
+
+	function changeevent() {
+		var koraddress = $("#address1").val();
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			level : 3
+		// 지도의 확대 레벨
+		};
+
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+
+		// 주소로 좌표를 검색합니다
+		geocoder
+				.addressSearch(
+						koraddress,
+						function(result, status) {
+
+							// 정상적으로 검색이 완료됐으면 
+							if (status === kakao.maps.services.Status.OK) {
+
+								var coords = new kakao.maps.LatLng(result[0].y,
+										result[0].x);
+
+								// 결과값으로 받은 위치를 마커로 표시합니다
+								var marker = new kakao.maps.Marker({
+									map : map,
+									position : coords
+								});
+
+								// 인포윈도우로 장소에 대한 설명을 표시합니다
+								var infowindow = new kakao.maps.InfoWindow(
+										{
+											content : '<div style="width:150px;text-align:center;padding:6px 0;">미션 장소</div>'
+										});
+								infowindow.open(map, marker);
+
+								// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+								map.setCenter(coords);
+							}
+						});
+	}
+</script>
 
 <script>
 	$(document).ready(function() {
+		changeevent()
 		$("#submitBtn").click(function() {
 			$.ajax({
 				url : "http://localhost/mission",
@@ -59,7 +105,7 @@
 						contentType : false,
 						cache : false,
 						success : function() {
-							/* location.href="list.jsp"; */
+							location.href = "list.jsp";
 						},
 						error : function() {
 
@@ -73,7 +119,7 @@
 			});
 
 		});
-	});
+	});//document end
 </script>
 <title>Document</title>
 </head>
@@ -108,18 +154,17 @@
 		<tr>
 			<th>우편번호</th>
 			<td><input type="text" size="5" maxlength="5" name="zip_code"
-				id="zip_code" /> <!-- <input
-                  type="button"
-                  value="우편검색"
-                  onclick="openDaumPostcode()"
-                /> --></td>
+				id="zip_code" /> <input type="button" value="주소검색"
+				onclick="openDaumPostcode()" /></td>
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type="text" size="50" name="address1" id="address1" />
-				<br>
-			<input type="text" size="50" name="address2" id="address2" /></td>
+			<td><input type="text" size="50" name="address1" id="address1"
+				 /> <br> <input type="text" size="50"
+				name="address2" id="address2"  onfocus="changeevent()"/></td>
 		</tr>
+		<tr>
+			<td colspan="2" id="map" style="width: 500px; height: 400px;"></td>
 		</tr>
 		<tr>
 			<th>사진</th>
@@ -138,16 +183,6 @@
 			<td colspan="2" align="center"><input type="button"
 				id="submitBtn" value="전송" /></td>
 		</tr>
-		<!-- <script>
-          var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-              mapOption = {
-                  center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                  level: 3 // 지도의 확대 레벨
-              };
-
-          // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-          var map = new kakao.maps.Map(mapContainer, mapOption);
-          </script> -->
 	</table>
 </body>
 </html>

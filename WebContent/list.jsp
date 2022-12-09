@@ -91,7 +91,6 @@
           $(".datatable").append(td);
         }
       }
-      //list 가장 첫 page
       function page(nowpage){
     	  var url = "http://localhost/list?pageNum="+nowpage;
           fetch(url)
