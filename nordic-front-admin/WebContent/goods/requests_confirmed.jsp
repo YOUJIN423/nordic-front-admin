@@ -23,9 +23,8 @@
             getAll(1,"","",$("#start").val(),$("#end").val());
       }
       function getAll(pageNum,search="",keyword="", start="", end=""){
-        console.log(pageNum);
-        console.log(keyword);
-        console.log(start); console.log(end);
+    	  let token = localStorage.getItem('wtw-token') || '';
+    	  
         if ($("#aC").is(":checked")) {  // 관리자 체크박스가 checked 상태일 때
         var url = "http://localhost/api/requests/confirmed/y?"+ "start=" + start + "&end=" + end + "&search=" + search + "&keyword=" + keyword + "&pageNum=" + pageNum;
         $("#aC").checked = true;
@@ -40,6 +39,9 @@
             url: url,
             method: "get",
             contentType : "application/json",
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: { },
             success: function (success) {
               

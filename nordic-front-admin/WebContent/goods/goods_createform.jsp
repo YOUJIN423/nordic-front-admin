@@ -12,7 +12,7 @@
 
     $(document).ready(function () {
         $("#goodsInsert").click(function () {
-
+        	let token = localStorage.getItem('wtw-token') || '';
             //FormData 새로운 객체 생성 
             var formData = new FormData();
             // 넘길 데이터를 담아준다. 
@@ -55,6 +55,9 @@ for (var i = 0; i < fileInput.length; i++) {
             processData: false,
             contentType:false,
             enctype : 'multipart/form-data',
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: formData,
             success: function (success) {
               console.log(success);

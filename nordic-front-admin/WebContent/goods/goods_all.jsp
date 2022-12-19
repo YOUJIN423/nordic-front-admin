@@ -24,7 +24,8 @@
       }
       function getAll(pageNum=1,search="",keyword=""){
         console.log("첫" + keyword);
-
+        let token = localStorage.getItem('wtw-token') || '';
+        
         if ($("#aC").is(":checked")) {  // 관리자 체크박스가 checked 상태일 때
         var url = "http://localhost/api/goods/all/y?" + "pageNum=" + pageNum;
         $("#aC").checked = true;
@@ -39,6 +40,9 @@
             url: url,
             method: "get",
             contentType : "application/json",
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: { },
             success: function (success) {
               

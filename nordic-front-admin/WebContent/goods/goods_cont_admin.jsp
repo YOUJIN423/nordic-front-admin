@@ -19,11 +19,14 @@ const contentType = 'image/png';
       $(document).ready(function () {
         const goodsNo = location.href.split('?')[1];
         console.log(goodsNo); // data
-
+        let token = localStorage.getItem('wtw-token') || '';
         $.ajax({
             url: "http://localhost/api/goods/" + goodsNo,
             method: "get",
             contentType : "application/json",
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: { },
             success: function (success) {
               console.log(success.data);
@@ -65,6 +68,9 @@ const contentType = 'image/png';
             url: "http://localhost/api/goods/" + goodsNo,
             method: "delete",
             contentType : "application/json",
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: { },
             success: function (success) {
               alert("굿즈 삭제 성공");
