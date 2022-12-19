@@ -17,6 +17,7 @@
     <script>
 
       function getAll(pageNum,search="",keyword=""){
+    	  let token = localStorage.getItem('wtw-token') || '';
         console.log(pageNum);
         if ($("#rC").is(":checked")) {  // 관리자 체크박스가 checked 상태일 때
         var url = "http://localhost/api/requests/unconfirmed/aLL?"+ "search=" + search + "&keyword=" + keyword + "&pageNum=" + pageNum;
@@ -28,6 +29,9 @@
             url: url,
             method: "get",
             contentType : "application/json",
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: { },
             success: function (success) {
               
@@ -195,11 +199,13 @@
       }
       function acceptRequest(requestNo){
         console.log(requestNo);
+        let token = localStorage.getItem('wtw-token') || '';
         var url = "http://localhost/api/requests/" + requestNo + "/y";
           fetch(url, {
             method: "POST",
             headers: {
             'Content-Type' : 'application/json',
+            'Authorization': `Bearer \${token}`,
             }
           }).then(response => response.json())
             .then(response => {
@@ -216,12 +222,14 @@
 
       }
       function rejectRequest(requestNo){
+    	  let token = localStorage.getItem('wtw-token') || '';
         console.log(requestNo);
         var url = "http://localhost/api/requests/" + requestNo + "/n";
           fetch(url, {
             method: "POST",
             headers: {
             'Content-Type' : 'application/json',
+            'Authorization': `Bearer \${token}`,
             }
           }).then(response => response.json())
             .then(response => {
@@ -238,6 +246,7 @@
       }
       
       $(document).ready(function () {
+    	  
         getAll(1);
         $("#search_button").click(function(){
               getAll(1,$("#search").val(), $("#keyword").val())

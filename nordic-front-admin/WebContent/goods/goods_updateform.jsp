@@ -11,6 +11,7 @@
     <script>
 
     $(document).ready(function () {
+    	let token = localStorage.getItem('wtw-token') || '';
         const goodsNo = window.localStorage.getItem("goods_no");
         console.log(goodsNo);
         window.localStorage.removeItem("goods_no");
@@ -80,6 +81,9 @@ formData.append('fileOrder', new Blob([JSON.stringify(fileOrderList)], {type: "a
             processData: false,
             contentType:false,
             enctype : 'multipart/form-data',
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: formData,
             success: function (success) {
               console.log(success);

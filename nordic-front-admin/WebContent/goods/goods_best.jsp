@@ -10,10 +10,14 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
       function getAll(pageNum){
+    	  let token = localStorage.getItem('wtw-token') || '';
         $.ajax({
             url: "http://localhost/api/goods/best?pageNum=" + pageNum,
             method: "get",
             contentType : "application/json",
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: { },
             success: function (success) {
               console.log(success.data.list);
