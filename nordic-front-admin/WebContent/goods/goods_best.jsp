@@ -5,9 +5,14 @@
   <head>
     <meta charset="UTF-8" />
     <title>(관리자) 가장 잘 팔리는 굿즈</title>
+     <link href="<%=request.getContextPath()%>/goods/hidden_text.css" rel="stylesheet" type="text/css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
       function getAll(pageNum){
     	  let token = localStorage.getItem('wtw-token') || '';
@@ -36,7 +41,7 @@
 
                 var tdCnt = document.createTextNode(cnt);
                 var tdGoodsNo = document.createTextNode(goods_no);
-                var tdGoodName = document.createTextNode(goods_name);
+                var tdGoodsName = document.createTextNode(goods_name);
                 var tdPoint = document.createTextNode(point);
                 var tdFirstDate = document.createTextNode(first_date);
                 var tdLastDate = document.createTextNode(last_date);
@@ -50,17 +55,16 @@
                 var td6 = document.createElement("td");
                 var td7 = document.createElement("td");
                 var cont_button = document.createElement("button");
-
+                var a = document.createElement("a");
+                a.setAttribute("href",`goods_cont_admin.jsp?\${goods_no}`);
+                a.appendChild(tdGoodsName);
+                
                 td1.appendChild(tdCnt);
                 td2.appendChild(tdGoodsNo);
-                td3.appendChild(tdGoodName);
+                td3.appendChild(a);
                 td4.appendChild(tdPoint);
                 td5.appendChild(tdFirstDate);
                 td6.appendChild(tdLastDate);
-                cont_button.setAttribute("type","button");
-                cont_button.setAttribute("value","상세정보보기");
-                cont_button.setAttribute("onClick","location.href='goods_cont_admin.jsp?" + goods_no + "'");
-                cont_button.setAttribute("style","width:100px;height:40px;")
 
                 tr.appendChild(td1);
                 tr.appendChild(td2);
@@ -68,7 +72,6 @@
                 tr.appendChild(td4);
                 tr.appendChild(td5);
                 tr.appendChild(td6);
-                tr.appendChild(cont_button);
 
                 var tbody = document.getElementsByTagName("tbody")[0];
 
@@ -93,9 +96,9 @@
 				if(pageNum>10) {
                     var temp = startPage-1;
                     console.log(temp);
-					prev = `<a onclick=getAll(` + temp + `)>[이전]</a>`
+                    prev = `<li class="page-item"><a class="page-link" href="javascript:void(0);" onClick=getAll(\${temp})>Previous</a></li>`
 				} else {
-					prev = `<a>[이전]</a>`
+					prev = `<li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>`
 				}
 				
 				var pageList=``;
@@ -107,9 +110,10 @@
             break;
           }
 					if (p!=pageNum) {
-						page = `<span><a onclick=getAll(` + p + `)> ` + p + ` </a></span>`	
+			            page = `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick=getAll(\${p})>\${p}</a></li>`;
+
 					} else {
-						page = `<span><b> ` + p + ` </b></span>`	
+			            page = `<li class="page-item"><a class="page-link active" href="javascript:void(0);">\${p}</a></li>`;	
 					}
 					
 					if(j==pages) {
@@ -121,17 +125,18 @@
 				
 				var later;
 				if(endPage>total) {
-					later = `<a>[다음]</a>`
+					later = `<li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>`
+
 				} else {
 					var temp = endPage + 1;
                     console.log(temp);
-					later = `<a onclick=getAll(` + temp + `)>[다음]</a>`
+                    later = `<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick=getAll(\${temp})>Next</a></li>`
 				}
 				
 				pagenation = prev+pageList+later;
 				
 
-				$("#page").html(pagenation);
+				$("#paget").html(pagenation);
       }
 
       $(document).ready(function () {
@@ -141,10 +146,17 @@
     </script>
     <title>Document</title>
   </head>
-  <body>
+ <body style="width:100%">
+  	<div class="container mt-5 mb-5">
+		<div class="row">
+			<jsp:include page="../sidebar.jsp"/>
+			<div class="col-sm-10 ps-5">
+				<h1>가장 많이 지급된 포인트 상품</h1>	
+				<br>
+	<div style="width:1200px;">
 
-      <table border="1">
-        <caption>가장 잘 팔리는 굿즈</caption>
+      <table style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
         <thead>
             <th>지급횟수</th>
             <th>상품코드</th>
@@ -152,14 +164,18 @@
             <th>포인트</th>
             <th>처음지급일시</th>
             <th>나중지급일시</th>
-            <th>상세정보</th>
         </thead>
         <tbody id="gbody">
 
         </tbody>
     </table>
-
-    <div id="page"></div>
+	<div style="width:100%">
+      <nav aria-label="Page navigation example" style="margin-left:300px;">
+      <ul class="pagination" id="paget">
+      </ul>
+     </nav>
+	</div>
+    </div></div></div></div>
   </body>
 </html>
 

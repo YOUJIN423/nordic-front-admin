@@ -8,6 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
 
     $(document).ready(function () {
@@ -156,54 +160,60 @@ formData.append('fileOrder', new Blob([JSON.stringify(fileOrderList)], {type: "a
 }
       </script>
 </head>
-<body>
-  <table border="1" width="1000" height="500">
-    <caption>굿즈 수정</caption>
+  <body style="width:100%">
+  	<div class="container mt-5 mb-5">
+		<div class="row">
+			<jsp:include page="../sidebar.jsp"/>
+			<div class="col-sm-10 ps-5">
+				<h1>포인트 상품 수정</h1>	
+				<br>
+  <table style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
     <tbody>
       <tr>
         <th>굿즈명</th>
-        <td colspan="2"><input type="text" name="goods_name" id="goods_name" placeholder="굿즈명"></td>
+        <td colspan="2"><input type="text" name="goods_name" id="goods_name" placeholder="포인트 상품명" style="width:100%"></td>
       </tr>
       <tr>
         <th>포인트</th>
-        <td colspan="2"><input type="text" name="point" id="point" placeholder="포인트"></td>
+        <td colspan="2"><input type="text" name="point" id="point" placeholder="포인트" style="width:100%"></td>
       </tr>
       <tr>
         <th>상세설명</th>
-        <td colspan="2"><input type="text" name="goods_desc" id="goods_desc" placeholder="상세설명"></td>
+        <td colspan="2"><input type="text" name="goods_desc" id="goods_desc" placeholder="상세설명" style="width:100%"></td>
       </tr>
       <tr>
         <th>리마크</th>
-        <td colspan="2"><input type="text" name="remark" id="remark" placeholder="리마크"></td>
+        <td colspan="2"><input type="text" name="remark" id="remark" placeholder="기타" style="width:100%"></td>
       </tr> 
       <tr>
         <th>파일1</th>
-        <td><input type="file" name="file1" class="files" id="file1" onchange="readURL(this,1);"></td>
-        <td><img id="preview1" width="50" height="50"></td>
+        <td><input type="file" name="file1" class="files" id="file1" onchange="readURL(this,1);" style="width:100%"></td>
+        <td><img id="preview1" width="100" height="100"></td>
       </tr>
       <tr>
         <th>파일2</th>
-        <td><input type="file" name="file2" class="files" id="file2" onchange="readURL(this,2);"></td>
-        <td><img id="preview2" width="50" height="50"></td>
+        <td><input type="file" name="file2" class="files" id="file2" onchange="readURL(this,2);" style="width:100%"></td>
+        <td><img id="preview2" width="100" height="100"></td>
       </tr>
       <tr>
         <th>파일3</th>
-        <td><input type="file" name="file3" class="files" id="file3" onchange="readURL(this,3);"></td>
-        <td><img id="preview3" width="50" height="50"></td>
+        <td><input type="file" name="file3" class="files" id="file3" onchange="readURL(this,3);" style="width:100%"></td>
+        <td><img id="preview3" width="100" height="100"></td>
       </tr>
       <tr>
         <th>파일4</th>
-        <td><input type="file" name="file4" class="files" id="file4" onchange="readURL(this,4);"></td>
-        <td><img id="preview4" width="50" height="50"></td>
+        <td><input type="file" name="file4" class="files" id="file4" onchange="readURL(this,4);" style="width:100%"></td>
+        <td><img id="preview4" width="100" height="100"></td>
       </tr>
       <tr>
         <th>파일5</th>
-        <td><input type="file" name="file5" class="files" id="file5" onchange="readURL(this,5);"></td>
-        <td><img id="preview5" width="50" height="50"></td>
+        <td><input type="file" name="file5" class="files" id="file5" onchange="readURL(this,5);" style="width:100%"></td>
+        <td><img id="preview5" width="100" height="100"></td>
       </tr>
-        <input type="button" value="확인" id="goodsInsert">
+      <button type="button" id="goodsInsert" class="btn btn-dark">확인</button>
     </tbody>
 </table>
-
+</div></div></div>
 </body>
 </html>

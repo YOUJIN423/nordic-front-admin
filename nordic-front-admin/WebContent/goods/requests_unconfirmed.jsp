@@ -6,6 +6,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>(관리자) 확인 안한 모든 요청들</title>
+    <link href="<%=request.getContextPath()%>/goods/hidden_text.css" rel="stylesheet" type="text/css" />
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -199,6 +201,9 @@
       }
       function acceptRequest(requestNo){
         console.log(requestNo);
+        if(!confirm("수락 하시겠습니까?")){
+
+        }else{
         let token = localStorage.getItem('wtw-token') || '';
         var url = "http://localhost/api/requests/" + requestNo + "/y";
           fetch(url, {
@@ -212,18 +217,23 @@
               console.log("신청 수락 완료");
               if(response.message.substring(0,4) == '0006'){
                 alert("이미 취소된 요청은 수락 또는 거절 불가능합니다")
-              };
+              } else{
+            	 alert("포인트 상품 신청을 수락했습니다.")
+              }
               location.reload();
             })
             .catch(error => {
                 console.log(error);
                 alert(error);
             });
-
+      		}
       }
       function rejectRequest(requestNo){
-    	  let token = localStorage.getItem('wtw-token') || '';
         console.log(requestNo);
+        if(!confirm("거절 하시겠습니까?")){
+
+        }else{
+      	  let token = localStorage.getItem('wtw-token') || '';
         var url = "http://localhost/api/requests/" + requestNo + "/n";
           fetch(url, {
             method: "POST",
@@ -236,15 +246,17 @@
               console.log("신청 거절 완료");
               if(response.message.substring(0,4) == '0006'){
                 alert("이미 취소된 요청은 수락 또는 거절 불가능합니다")
-              };
+              } else{
+            	 alert("포인트 상품 신청을 거절했습니다.")
+              }
               location.reload();
             })
             .catch(error => {
                 console.log(error);
                 alert(error);
             });
+      	}
       }
-      
       $(document).ready(function () {
     	  
         getAll(1);
@@ -255,8 +267,14 @@
     </script>
     <title>Document</title>
   </head>
-  <body style="width:100%">
-    <div style="width:800px;" class="mx-auto">
+    <body style="width:100%">
+  	<div class="container mt-5 mb-5">
+		<div class="row">
+			<jsp:include page="../sidebar.jsp"/>
+			<div class="col-sm-10 ps-5">
+				<h1>미확인 상태 포인트 상품 요청</h1>	
+				
+	<div style="width:1200px;">
     <span id="AllList">
       <input type="checkbox" id="rC" onClick="getAll(1)" class="requests form-check-input"> 
       <label for="rC" class="form-check-label"> 취소된 요청 포함 </label>
@@ -273,8 +291,8 @@
       <button type="button" id="search_button" class="btn btn-dark">검색</button>
       </span>
       <br><br>
-      <table border="1">
-        <caption>미처리 요청</caption>
+      <table style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
         <thead style="text-align: center;">
             <th>요청번호</th>
             <th>상품명</th>
@@ -292,11 +310,11 @@
 
         </tbody>
     </table>
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example" style="margin-left:300px;">
       <ul class="pagination" id="paget">
       </ul>
     </nav>
-</div>
+</div></div></div></div>
   </body>
 </html>
 

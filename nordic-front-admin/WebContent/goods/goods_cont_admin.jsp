@@ -264,15 +264,22 @@ const contentType = 'image/png';
     </script>
     <title>Document</title>
   </head>
-  <body style="width:100%">
-    <div style="width:800px;" class="mx-auto">
+ <body style="width:100%">
+  	<div class="container mt-5 mb-5">
+		<div class="row">
+			<jsp:include page="../sidebar.jsp"/>
+			<div class="col-sm-10 ps-5">
+				<h1>포인트 상품 상세정보 (관리자)</h1>	
+				<br>
+				
+    <div style="width:1200px;">
 
     
     <button type="button" id="update_button" name="update_button" class="btn btn-dark">수정</button>
     <button type="button" id="delete_button" name="delete_button" class="btn btn-dark">삭제</button>
     <br><br>
-    <table border="1" width="1000">
-      <caption>굿즈 상세정보(관리자)</caption>
+    <table style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
       <tbody>
         <tr>
           <th>상품번호</th>
@@ -347,7 +354,8 @@ const contentType = 'image/png';
       </tbody>
   </table>
 <br><br>
-<table border="1">
+<table style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
   <thead style="text-align: center;">
       <tr>
           <th>확인자</th>
@@ -362,13 +370,18 @@ const contentType = 'image/png';
       </tr>
   </thead>
   <tbody id="rbody" name="rbody" style="text-align: center;"></tbody>
+  
+  <h1>해당 포인트 상품 요청 보기</h1>	
+  <br>
 </table>
-<div id="page"></div>
-<nav aria-label="Page navigation example">
-  <ul class="pagination" id="paget">
-  </ul>
-</nav>
+	<div style="width:100%">
+      <nav aria-label="Page navigation example" style="margin-left:300px;">
+      <ul class="pagination" id="paget">
+      </ul>
+     </nav>
+	</div>
 </div>
+</div></div></div>
   </body>
 </html>
 

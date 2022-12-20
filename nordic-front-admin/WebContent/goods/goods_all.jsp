@@ -5,6 +5,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>(관리자) 모든 굿즈</title>
+    <link href="<%=request.getContextPath()%>/goods/hidden_text.css" rel="stylesheet" type="text/css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -224,10 +225,9 @@
 		<div class="row">
 			<jsp:include page="../sidebar.jsp"/>
 			<div class="col-sm-10 ps-5">
-				<h1>모든 포인트 상품 보기</h1>	
-
-<div style="width:1000px;">
-
+				<h1>모든 포인트 상품 (관리자)</h1>	
+				
+	<div style="width:1200px;">
     <span id="acceptedList">
       <input type="checkbox" id="xC" onClick="checkControl(this)" class="requests form-check-input" checked> 
       <label for="xC" class="form-check-label"> 모든 굿즈 </label>
@@ -255,10 +255,9 @@
     <button type="button" id="create_button" name="create_button" class="btn btn-dark">굿즈 만들기</button>
 	</span>
     <br><br>
-      <table border="1" style="text-align:center; width: 100%"
+      <table style="text-align:center; width: 100%"
 								class="mt-3 table table-hover">
-        <caption>모든 굿즈 보기 (관리자)</caption>
-        <thead style="text-align: center;">
+        <thead>
             <th>상품명</th>
             <th>포인트</th>
             <th>상품번호</th>
@@ -274,11 +273,14 @@
 
         </tbody>
     </table>
-    <nav aria-label="Page navigation example">
+	<div style="width:100%">
+      <nav aria-label="Page navigation example" style="margin-left:300px;">
       <ul class="pagination" id="paget">
       </ul>
-    </nav>
+     </nav>
+	</div>
   </div>
+
   			</div>
 		</div>
 	</div>		
