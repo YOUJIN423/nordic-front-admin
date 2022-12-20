@@ -220,9 +220,13 @@
     <title>Document</title>
   </head>
   <body style="width:100%">
-<div style="width:800px;" class="mx-auto">
-    <button type="button" id="create_button" name="create_button" class="btn btn-dark">굿즈 만들기</button>
-    <br><br>
+  	<div class="container mt-5 mb-5">
+		<div class="row">
+			<jsp:include page="../sidebar.jsp"/>
+			<div class="col-sm-10 ps-5">
+				<h1>모든 포인트 상품 보기</h1>	
+
+<div style="width:1000px;">
 
     <span id="acceptedList">
       <input type="checkbox" id="xC" onClick="checkControl(this)" class="requests form-check-input" checked> 
@@ -247,8 +251,12 @@
     <input type="text" id="keyword" placeholder="검색" style="width:500px;border-radius: 20px;"> 
     <button type="button" id="search_button" class="btn btn-dark">검색</button>
     </span>
+    <span style="margin-left:200px;">
+    <button type="button" id="create_button" name="create_button" class="btn btn-dark">굿즈 만들기</button>
+	</span>
     <br><br>
-      <table border="1">
+      <table border="1" style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
         <caption>모든 굿즈 보기 (관리자)</caption>
         <thead style="text-align: center;">
             <th>상품명</th>
@@ -271,6 +279,9 @@
       </ul>
     </nav>
   </div>
+  			</div>
+		</div>
+	</div>		
   </body>
 </html>
 
