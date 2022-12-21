@@ -51,12 +51,15 @@
                 var goods_name = rowData.goods_name;
                 var member_name = rowData.member_name;
                 var remark = rowData.remark;
+                if(remark == null){
+                	remark = ".";
+                }
                 var create_date = rowData.create_date;
                 var available_point = rowData.available_point;
                 var goods_no = rowData.goods_no;
                 var member_code = rowData.member_code;
                 var point = rowData.point;
-
+				var use_yn = rowData.use_yn;
 
 
                 var tdRequestNo = document.createTextNode(request_no);
@@ -85,17 +88,17 @@
                 var reject_button = document.createElement("input");
 
                 td1.appendChild(tdRequestNo);
-                td2.appendChild(tdGoodsName);
-                td3.appendChild(tdMemberName);
-                td4.appendChild(tdRemark);
-                td5.appendChild(tdCreateDate);
+                td3.appendChild(tdGoodsName);
+                td5.appendChild(tdMemberName);
+                td9.appendChild(tdRemark);
+                td8.appendChild(tdCreateDate);
                 td6.appendChild(tdAvailablePoint);
                 accept_button.setAttribute("type","button");
                 accept_button.setAttribute("value","수락");
                 accept_button.setAttribute("onClick","acceptRequest(+ " + request_no + ")");
                 accept_button.setAttribute("style","width:100%;height:30px;")
                 if (rowData.use_yn == 'Y'){
-                  td7.appendChild(accept_button);
+                  td10.appendChild(accept_button);
                 }
                 
 
@@ -104,12 +107,12 @@
                 reject_button.setAttribute("onClick","rejectRequest(+ " + request_no + ")");
                 reject_button.setAttribute("style","width:100%;height:30px;")
                 if (rowData.use_yn == 'Y'){
-                  td8.appendChild(reject_button);
+                  td11.appendChild(reject_button);
                 }
 
-                td9.appendChild(tdGoodsNo);
-                td10.appendChild(tdMemberCode);
-                td11.appendChild(tdPoint);
+                td2.appendChild(tdGoodsNo);
+                td4.appendChild(tdMemberCode);
+                td7.appendChild(tdPoint);
 
                 tr.appendChild(td1);
                 tr.appendChild(td2);
@@ -122,6 +125,10 @@
                 tr.appendChild(td9);
                 tr.appendChild(td10);
                 tr.appendChild(td11);
+                
+                if(use_yn == "N"){
+                	tr.setAttribute("style","color:gray;text-decoration:line-through;");
+                }
 
                 tbody.appendChild(tr);  
               }
@@ -295,16 +302,16 @@
 								class="mt-3 table table-hover">
         <thead style="text-align: center;">
             <th>요청번호</th>
+            <th>상품번호</th>
             <th>상품명</th>
+            <th>멤버번호</th>
             <th>멤버명</th>
-            <th>리마크</th>
-            <th>요청일시</th>
             <th>가용포인트</th>
+            <th>필요포인트</th>
+            <th>요청일시</th>
+            <th>기타</th>
             <th>수락</th>
             <th>거절</th>
-            <th>굿즈번호</th>
-            <th>멤버코드</th>
-            <th>포인트</th>
         </thead>
         <tbody id="gbody" style="text-align: center;">
 

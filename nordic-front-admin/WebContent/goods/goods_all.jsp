@@ -72,7 +72,6 @@
                 var tdPoint = document.createTextNode(point);
                 var tdGoodsNo = document.createTextNode(goods_no);
                 var tdGoodsDesc = document.createTextNode(goods_desc);
-                var tdUseYn = document.createTextNode(use_yn);
                 var tdCreateMember = document.createTextNode(create_member);
                 var tdCreateDate = document.createTextNode(create_date);
                 var tdUpdateMember = document.createTextNode(update_member);
@@ -84,7 +83,6 @@
                 var td2 = document.createElement("td");
                 var td3 = document.createElement("td");
                 var td4 = document.createElement("td");
-                var td5 = document.createElement("td");
                 var td6 = document.createElement("td");
                 var td7 = document.createElement("td");
                 var td8 = document.createElement("td");
@@ -95,11 +93,10 @@
                 a.setAttribute("href",`goods_cont_admin.jsp?\${goods_no}`);
                 a.appendChild(tdGoodsName);
                 
-                td1.appendChild(a);
-                td2.appendChild(tdPoint);
-                td3.appendChild(tdGoodsNo);
+                td1.appendChild(tdGoodsNo);
+                td2.appendChild(a);
+                td3.appendChild(tdPoint);
                 td4.appendChild(tdGoodsDesc);
-                td5.appendChild(tdUseYn);
                 td6.appendChild(tdCreateMember);
                 td7.appendChild(tdCreateDate);
                 td8.appendChild(tdUpdateMember);
@@ -115,7 +112,6 @@
                 tr.appendChild(td2);
                 tr.appendChild(td3);
                 tr.appendChild(td4);
-                tr.appendChild(td5);
                 tr.appendChild(td6);
                 tr.appendChild(td7);
                 tr.appendChild(td8);
@@ -123,6 +119,9 @@
                 tr.appendChild(td10);
                 // tr.appendChild(cont_button);
 
+                if(use_yn == "N"){
+                	tr.setAttribute("style","color:gray;text-decoration:line-through;");
+                }
                 tbody.appendChild(tr);  
               }
               paging(pageNum, success.data.pages, search, keyword);
@@ -258,11 +257,10 @@
       <table style="text-align:center; width: 100%"
 								class="mt-3 table table-hover">
         <thead>
+        	<th>상품번호</th>
             <th>상품명</th>
             <th>포인트</th>
-            <th>상품번호</th>
             <th>상품설명</th>
-            <th>사용여부</th>
             <th>등록자</th>
             <th>등록일</th>
             <th>수정자</th>

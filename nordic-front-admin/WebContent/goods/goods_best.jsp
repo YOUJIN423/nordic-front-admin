@@ -159,11 +159,11 @@
 								class="mt-3 table table-hover">
         <thead>
             <th>지급횟수</th>
-            <th>상품코드</th>
+            <th>상품번호</th>
             <th>상품명</th>
             <th>포인트</th>
-            <th>처음지급일시</th>
-            <th>나중지급일시</th>
+            <th>첫 지급 일시</th>
+            <th>마지막 지급 일시</th>
         </thead>
         <tbody id="gbody">
 

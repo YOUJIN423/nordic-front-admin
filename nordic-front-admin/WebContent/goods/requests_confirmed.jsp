@@ -62,11 +62,19 @@
                 var goods_name = rowData.goods_name;
                 var member_name = rowData.member_name;
                 var remark = rowData.remark;
+                if(remark == null){
+                	remark = ".";
+                }
                 var create_date = rowData.create_date;
                 var confirm_member = rowData.confirm_member;
                 var goods_no = rowData.goods_no;
                 var member_code = rowData.member_code;
                 var refuse_yn = rowData.refuse_yn;
+                if(refuse_yn == "N"){
+                	refuse_yn = "수락";
+                } else{
+                	refuse_yn = "거절";
+                }
                 var update_date = rowData.update_date;
                 var point = rowData.point;
 
@@ -97,16 +105,16 @@
                 var td11 = document.createElement("td");
 
                 td1.appendChild(tdRequestNo);
-                td2.appendChild(tdGoodsName);
-                td3.appendChild(tdMemberName);
-                td4.appendChild(tdRemark);
-                td5.appendChild(tdCreateDate);
-                td6.appendChild(tdConfirmMember);
-                td7.appendChild(tdGoodsNo);
-                td8.appendChild(tdMemberCode);
+                td3.appendChild(tdGoodsName);
+                td5.appendChild(tdMemberName);
+                td11.appendChild(tdRemark);
+                td7.appendChild(tdCreateDate);
+                td8.appendChild(tdConfirmMember);
+                td2.appendChild(tdGoodsNo);
+                td4.appendChild(tdMemberCode);
                 td9.appendChild(tdRefuseYn);
                 td10.appendChild(tdUdateDate);
-                td11.appendChild(tdPoint);
+                td6.appendChild(tdPoint);
 
                 tr.appendChild(td1);
                 tr.appendChild(td2);
@@ -255,16 +263,16 @@
 								class="mt-3 table table-hover">
         <thead style="text-align: center;">
             <th>요청번호</th>
+            <th>상품번호</th>
             <th>상품명</th>
+            <th>멤버번호</th>
             <th>멤버명</th>
-            <th>리마크</th>
+            <th>포인트</th>
             <th>요청일시</th>
             <th>확인자</th>
-            <th>굿즈번호</th>
-            <th>멤버코드</th>
             <th>거절여부</th>
             <th>확인날짜</th>
-            <th>포인트</th>
+            <th>기타</th>
         </thead>
         <tbody id="gbody" style="text-align: center;">
 
