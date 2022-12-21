@@ -291,6 +291,7 @@ const contentType = 'image/png';
     <title>Document</title>
   </head>
  <body style="width:100%">
+ <jsp:include page="../header.jsp"/>
   	<div class="container mt-5 mb-5">
 		<div class="row">
 			<jsp:include page="../sidebar.jsp"/>
@@ -404,6 +405,7 @@ const contentType = 'image/png';
 	</div>
 </div>
 </div></div></div>
+ <jsp:include page="../footer.jsp"/>
   </body>
 </html>
 
