@@ -11,7 +11,12 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/footer.css">
-
+<style>
+a {
+	text-decoration: none;
+    color: black;
+}
+</style>
 <script>
 	function login() {
 		var member_code = $("#member_code").val();
@@ -25,7 +30,7 @@
 		
 		$.ajax({
 			method : "POST",
- 			url : "http://localhost:80/api/member/login",
+ 			url : "http://localhost:80/api/member/login?role=admin",
  			data : JSON.stringify({
  				"member_code" : member_code,
  				"password" : password
@@ -34,11 +39,15 @@
  			success: function(data) {
  				console.log(data.data.token);
  				localStorage.setItem('wtw-token', data.data.token);
- 				localStorage.setItem('member_code',data.data.member_code)
+ 				localStorage.setItem('member_code',data.data.member_code);
 	 			location.href = referrer;
 	 			
  			}, error: function (data) {
-				alert("아이디 혹은 비밀번호를 확인하세요.")
+ 				if(data.responseJSON.message=="관리자 아님") {
+ 					alert("관리자 계정만 로그인 가능");
+ 				} else {
+					alert("아이디 혹은 비밀번호를 확인하세요.")
+ 				}
 			}
 		});
 	}
@@ -46,7 +55,7 @@
 </head>
 <body>
 	<header>
-		<h1>NORDIC WALKING</h1>
+		<a href="/nordic-front-admin/"><h1>NORDIC WALKING</h1></a>
 	</header>
 	<div class="container">
 		<div class="row col-7 border mx-auto" style="margin-top: 50px;">
