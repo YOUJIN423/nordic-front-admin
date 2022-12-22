@@ -181,6 +181,9 @@
         
         var url1 = "http://localhost/api/member/modify/";
         var data1 = $("#frmData").serialize();
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         $(function() {
         
@@ -188,6 +191,9 @@
                 type : "post",
                 url : url1 + member_code,
                 data : data1,
+                headers:{
+                	'Authorization' : `Bearer \${token}`,
+                },
                 success : function(result) {
                     alert("회원정보수정 완료!");
                     findAll(pageNum);
@@ -202,6 +208,9 @@
     function doDelete(member_code, pageNum) {
 
         var url = "http://localhost/api/member/del/"+member_code;
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         if (confirm(member_code+" 회원을 정말 강제탈퇴 처리 하시겠습니까?")) {
 
@@ -211,6 +220,9 @@
                         type : "post",
                         url : url,
                         data : member_code,
+                        headers:{
+                        	'Authorization' : `Bearer \${token}`,
+                        },
                         success : function(result) {
                             alert(member_code+"회원을 강제탈퇴 처리하였습니다.");
                             findAll(pageNum);
@@ -225,6 +237,9 @@
     /********************* 탈퇴 철회  *********************/
     function undoDelete(member_code, pageNum) {
         var url = "http://localhost/api/member/members/undoDelete/"+member_code;
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -232,6 +247,9 @@
                 type: "POST",
                 url: url,
                 data: member_code,
+                headers:{
+                	'Authorization' : `Bearer \${token}`,
+                },
                 success: function (result) {
 
                     alert("탈퇴 철회 완료");
@@ -452,6 +470,9 @@
         //셀렉트 2의 값 - 오름차순, 내림차순
         var arrangeBox2 = document.getElementById("arrangeBox2").value;
         var url = "http://localhost:80/api/member/members/arg/" + arrangeBox1 + arrangeBox2 + "/" + pageNum;
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         fetch(url, 
         {
@@ -459,6 +480,7 @@
             mode: 'cors',
             headers: {
             'Content-Type' : 'application/json',
+            'Authorization' : `Bearer \${token}`
             }
         })
         
@@ -637,7 +659,9 @@
         // 활동상태 셀렉트 값 - 가입 미승인 / 가입 승인 / 탈퇴
         var memberState = document.getElementById("memberState").value;
         var url = "http://localhost:80/api/member/members/mst/"+ memberState + "/" + pageNum;
-
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         fetch ( url , 
         {
@@ -645,6 +669,7 @@
             mode: 'cors',
             headers: {
                 'Content-Type' : 'application/json',
+                'Authorization' : `Bearer \${token}`,
             }
         })
 
@@ -827,6 +852,9 @@
     function doApproval(member_code, pageNum) {
 
         var url = "http://localhost/api/member/members/doApproval/"+member_code;
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -835,6 +863,9 @@
                 type: "post",
                 url : url,
                 data : member_code,
+                headers: {
+    		        'Authorization': `Bearer \${token}`,
+    		  	},
                 success : function(result) {
                     alert("가입승인 완료!");
                     memberState(1);
@@ -851,6 +882,9 @@
     function doAdmin(member_code, pageNum) {
         
         var url = "http://localhost/api/member/members/doAdmin/"+member_code;
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -859,6 +893,9 @@
                 type: "POST",
                 url : url,
                 data : member_code,
+                headers: {
+    		        'Authorization': `Bearer \${token}`,
+    		  	},
                 success : function (result) {
                     alert("관리자 승인 완료!");
                     memberState(1);
@@ -874,6 +911,9 @@
     function doUnadmin(member_code, pageNum) {
 
         var url = "http://localhost/api/member/members/doUnadmin/"+member_code;
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -882,6 +922,9 @@
                 type: "POST",
                 url : url,
                 data : member_code,
+                headers: {
+    		        'Authorization': `Bearer \${token}`,
+    		  	},
                 success : function (result) {
                     alert("관리자 해제 완료!");
                     findAll(1);
@@ -899,12 +942,16 @@
         var keyword = document.getElementById("keyword").value;
 
         var url = "http://localhost/api/member/members/"+search+"/"+keyword+"/"+pageNum;
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         fetch(url, {
             method : "GET",
             mode: "cors",
             headers: {
                 'Content-Type' : 'application/json',
+                'Authorization' : `Bearer \${token}`,
             }
         })
 
