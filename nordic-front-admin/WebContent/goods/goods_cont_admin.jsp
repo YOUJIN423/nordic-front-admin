@@ -38,11 +38,19 @@ const contentType = 'image/png';
               $("#goods_desc").text(dt.goods_desc);
               $("#create_date").text(dt.create_date);
               $("#goods_no").text(dt.goods_no);
-              $("#use_yn").text(dt.use_yn);
-              $("#remark").text(dt.remark);
+              if(dt.remark == null){
+            	  var temp = ".";
+              } else{
+            	  var temp = dt.remark;
+              }
+              $("#remark").text(temp);
               $("#create_member").text(dt.create_member);
               $("#update_date").text(dt.update_date);
-              $("#update_member").text(dt.update_date);
+              $("#update_member").text(dt.update_member);
+              
+              if(dt.use_yn == "N"){
+            	  $("#state").html("<h2>삭제된 상품입니다.</h2>")
+              }
               
               getImages(dt);
               getRequests(goodsNo,1);
@@ -77,7 +85,11 @@ const contentType = 'image/png';
               location.href="goods_all.jsp";
             },
             error: function (error) {
-              alert(error);
+              if(error.responseJSON.message.substring(0,4) == '0010'){
+            	  alert("이미 삭제된 상품입니다.")
+              } else{
+            	  alert("실패했습니다.")
+              }
             },
           });
         }
@@ -144,11 +156,24 @@ const contentType = 'image/png';
                 var rowData = success.data.list[i];
                 var confirm_member = rowData.confirm_member;
                 var confirm_yn = rowData.confirm_yn;
+                if(confirm_yn == "N"){
+                	confirm_yn = "미확인";
+                } else{
+                	confirm_yn = "확인";
+                }
                 var create_date = rowData.create_date;
                 var create_member = rowData.create_member;
                 var member_code = rowData.member_code;
                 var refuse_yn = rowData.refuse_yn;
+                if(refuse_yn == "N"){
+                	refuse_yn = "수락";
+                } else{
+                	refuse_yn = "거절";
+                }
                 var remark = rowData.remark;
+                if(remark == null){
+                	remark = ".";
+                }
                 var request_no = rowData.request_no;
                 var update_date = rowData.update_date;
                 var update_member = rowData.update_member;
@@ -168,36 +193,37 @@ const contentType = 'image/png';
                 var td1 = document.createElement("td");
                 var td2 = document.createElement("td");
                 var td3 = document.createElement("td");
+                var td4 = document.createElement("td");
                 var td5 = document.createElement("td");
                 var td6 = document.createElement("td");
                 var td7 = document.createElement("td");
-                var td8 = document.createElement("td");
                 var td9 = document.createElement("td");
 
-                var td11 = document.createElement("td");
-
                 
-                td1.appendChild(tdConfirmMember);
-                td2.appendChild(tdConfirmYn);
+                
+                td4.appendChild(tdConfirmYn);
                 td3.appendChild(tdCreateDate);
-                td5.appendChild(tdMemberCode);
-                td6.appendChild(tdRefuseYn);
-                td7.appendChild(tdRemark);
-                td8.appendChild(tdRequestNo);
-                td9.appendChild(tdUpdateDate);
-                td11.appendChild(tdUseYn);
-
+                td2.appendChild(tdMemberCode);
+                td9.appendChild(tdRemark);
+                td1.appendChild(tdRequestNo);
+                if(confirm_yn == "확인"){
+                	td7.appendChild(tdRefuseYn);
+                	 td6.appendChild(tdUpdateDate);
+                     td5.appendChild(tdConfirmMember);
+                } 
+               
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
+                tr.appendChild(td4);
                 tr.appendChild(td5);
                 tr.appendChild(td6);
                 tr.appendChild(td7);
-                tr.appendChild(td8);
                 tr.appendChild(td9);
-                tr.appendChild(td11);
 
-
+                if(use_yn == "N"){
+                	tr.setAttribute("style","color:gray;text-decoration:line-through;");
+                }
                 rbody.appendChild(tr);  
               }
               paging(pageNum, success.data.pages, goodsNo)
@@ -264,15 +290,24 @@ const contentType = 'image/png';
     </script>
     <title>Document</title>
   </head>
-  <body style="width:100%">
-    <div style="width:800px;" class="mx-auto">
+ <body style="width:100%">
+ <jsp:include page="../header.jsp"/>
+  	<div class="container mt-5 mb-5">
+		<div class="row">
+			<jsp:include page="../sidebar.jsp"/>
+			<div class="col-sm-10 ps-5">
+				<h1>포인트 상품 상세정보 (관리자)</h1>	
+				<br>
+				
+    <div style="width:1200px;" id="all">
 
     
     <button type="button" id="update_button" name="update_button" class="btn btn-dark">수정</button>
     <button type="button" id="delete_button" name="delete_button" class="btn btn-dark">삭제</button>
     <br><br>
-    <table border="1" width="1000">
-      <caption>굿즈 상세정보(관리자)</caption>
+    <table id="ttable" style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
+								<div id="state"></div>
       <tbody>
         <tr>
           <th>상품번호</th>
@@ -289,10 +324,6 @@ const contentType = 'image/png';
         <tr>
           <th>상품설명</th>
           <td id="goods_desc"></td>
-        </tr>
-        <tr>
-          <th>등록일</th>
-          <td id="create_date"></td>
         </tr>
         <tr>
           <th>사진1</th>
@@ -325,16 +356,16 @@ const contentType = 'image/png';
           </td>
         </tr>
         <tr>
-          <th>사용여부</th>
-          <td id="use_yn"></td>
-        </tr>
-        <tr>
           <th>기타</th>
           <td id="remark"></td>
         </tr>
         <tr>
-          <th>생성자</th>
+          <th>등록자</th>
           <td id="create_member"></td>
+        </tr>
+        <tr>
+          <th>등록일</th>
+          <td id="create_date"></td>
         </tr>
         <tr>
           <th>수정자</th>
@@ -347,28 +378,34 @@ const contentType = 'image/png';
       </tbody>
   </table>
 <br><br>
-<table border="1">
+<table style="text-align:center; width: 100%"
+								class="mt-3 table table-hover">
   <thead style="text-align: center;">
       <tr>
-          <th>확인자</th>
-          <th>확인여부</th>
-          <th>요청일시</th>
-          <th>요청한사람</th>
-          <th>거절여부</th>
-          <th>리마크</th>
           <th>요청번호</th>
+          <th>멤버번호</th>
+          <th>요청일시</th>
+          <th>확인여부</th>
+          <th>확인자</th>
           <th>확인일시</th>
-          <th>사용여부</th>
+          <th>거절여부</th>
+          <th>기타</th>
       </tr>
   </thead>
   <tbody id="rbody" name="rbody" style="text-align: center;"></tbody>
+  
+  <h1>해당 포인트 상품 요청 보기</h1>	
+  <br>
 </table>
-<div id="page"></div>
-<nav aria-label="Page navigation example">
-  <ul class="pagination" id="paget">
-  </ul>
-</nav>
+	<div style="width:100%">
+      <nav aria-label="Page navigation example" style="margin-left:300px;">
+      <ul class="pagination" id="paget">
+      </ul>
+     </nav>
+	</div>
 </div>
+</div></div></div>
+ <jsp:include page="../footer.jsp"/>
   </body>
 </html>
 
