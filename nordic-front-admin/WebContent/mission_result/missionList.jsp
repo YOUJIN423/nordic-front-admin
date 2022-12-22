@@ -33,6 +33,7 @@
 	var sd; 			 // 기간 조회 - start_date
 	var ed; 			 // 기간 조회 - end_date
 	let token = localStorage.getItem('wtw-token') || '';
+	let member_code = localStorage.getItem('member_code') || '';
 	
 	$(document).ready(function(){
 		pageNo = 1;
