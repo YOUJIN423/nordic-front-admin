@@ -19,6 +19,7 @@ function topRanking() {
 	console.log (url);
 	
 	let token = localStorage.getItem('wtw-token') || '';
+	let member_code = localStorage.getItem('member_code') || '';
 	
 	fetch(url, {
 	    method: "GET",
