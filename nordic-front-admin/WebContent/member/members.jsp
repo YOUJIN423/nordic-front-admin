@@ -33,6 +33,11 @@
             var memKeys = Object.keys(response.data);
             var memValues = Object.values(response.data);
             console.log(memValues[0]);
+            
+            if(memValues[11] == null ) { memValues[11] = '-' }
+            
+            if(memValues[12] == 'Y') { memValues[12] = '관리자' } 
+            else if (memValues[12] == 'N') { memValues[12] = '일반 회원'}
 
             var data =
             `   <div id="modifyFormWrapper">
@@ -44,58 +49,91 @@
                     <div class="col" id="indexArea">
                         아이디
                     </div>
-                    <div class="col">
+                    <div class="col" id="inputArea">
                         <input type="text" class="form-control form-control-sm"  id="member_code" name="member_code" value="\${memValues[0]}" readOnly>
                     </div>
                 </div><br>
+                
                 <div id="pwgroup" class="row">
                     <div class="col" id="indexArea">
                         비밀번호
                     </div>
-                    <div class="col">
+                    <div class="col" id="inputArea">
                         <input type="password" class="form-control form-control-sm" id="password" name="password">
                     </div>
                 </div><br>
+                
                 <div id="namegroup" class="row">
                     <div class="col" id="indexArea">
                         이름
                     </div>
-                    <div class="col">
+                    <div class="col" id="inputArea">
                         <input type="text" class="form-control form-control-sm" id="member_name" name="member_name" value="\${memValues[1]}">
                     </div>
                 </div><br>
+                
                 <div id="mobilegroup" class="row">
                     <div class="col" id="indexArea">
                         휴대폰
                     </div>
-                    <div class="col">
+                    <div class="col" id="inputArea">
                         <input type="text" class="form-control form-control-sm" id="mobile_no" name="mobile_no" value="\${memValues[2]}">
                     </div>
                 </div><br>
+                
                 <div id="mobilegroup" class="row">
                     <div class="col" id="indexArea">
                         주소
                     </div>
-                    <div class="col">
+                    <div class="col" id="inputArea">
                         <input type="text" class="form-control form-control-sm" id="address" name="address" value="\${memValues[3]}">
                     </div>
                 </div><br>
+                
                 <div id="sexgroup" class="row">
                     <div class="col" id="indexArea">
                         성별
                     </div>
-                    <div class="col">
+                    <div class="col" id="inputArea">
                         <input type="text" class="form-control form-control-sm" id="sex" name="sex" value="\${memValues[5]}">
                     </div>
                 </div><br>
+                
                 <div id="agegroup" class="row">
                     <div class="col" id="indexArea">
                         나이
                     </div>
-                    <div class="col">
+                    <div class="col" id="inputArea">
                         <input type="text" class="form-control form-control-sm" id="age" name="age" value="\${memValues[4]}">
                     </div>
-                </div>
+                </div><br>
+                
+                <div id="create_dategroup" class="row">
+                    <div class="col" id="indexArea">
+                        가입일자
+                    </div>
+                    <div class="col" id="inputArea">
+                        <input type="text" class="form-control-plaintext" id="create_date" name="create_date" value="\${memValues[19]}" disabled>
+                    </div>
+                </div><br>
+                
+                <div id="stop_dategroup" class="row">
+                    <div class="col" id="indexArea">
+                        탈퇴일자
+                    </div>
+                    <div class="col" id="inputArea">
+                        <input type="text" class="form-control-plaintext" id="stop_date" name="stop_date" value="\${memValues[11]}" disabled>
+                    </div>
+                </div><br>
+                
+                <div id="admin_yngroup" class="row">
+                    <div class="col" id="indexArea">
+                        등급
+                    </div>
+                    <div class="col" id="inputArea">
+                        <input type="text" class="form-control-plaintext" id="admin_yn" name="admin_yn" value="\${memValues[12]}" disabled>
+                    </div>
+                </div><br>
                 
                 <table class="table table-borderless w-auto"><tr><td><br><br>
                 <button type="button" class="btn btn-dark btn-sm" onClick="doModify()"> 수정 </button>
@@ -252,15 +290,10 @@
                     <th>나이</th>
                     <th>성별</th>
                     <th>가입승인</th>
-                    <th>탈퇴</th>
-                    <th>관리자</th>
                     <th>전체포인트</th>
                     <th>가용포인트</th>
                     <th>사용포인트</th>
                     <th>비고</th>
-                    <th>가입일자</th>
-                    <th>변경자</th>
-                    <th>변경일시</th>
                     <th></th><th></th>
             `;
 
@@ -278,10 +311,8 @@
 
                     if (i == 6) i++; // 동의여부 출력 x
                     if( i == 7 ) i++; // 비밀번호 출력 x
-                    if (i == 9) i++; // 승인일시 출력 x
-                    if (i == 11) i++; // 중지일시 출력 x
-                    if (i == 13) i++; // 관리자등록일 출력 x
-                    if (i == 18) i++; // 등록자 출력 x
+                    if (i == 9) i=14; // 승인일시 출력 x
+                    if (i == 18) break; // 등록자 출력 x
 
                     var asd = memValues[i];
                     if (memValues[i] == null || memValues[i] == 0 ) {
@@ -1020,6 +1051,10 @@
         font-size: large;
         font-weight:600;
     }
+    
+    #inputArea {
+        width: 600px;
+    }
 
     #adminFormat {
         font-weight: bold;
@@ -1047,29 +1082,36 @@
     /* span { border: 1px red; border-style: solid;} */
 
     div{
-        /* border :1px dotted red; */
-        width: 90%;
+        border :1px dotted red;
         margin:auto;
     }
 
     table {
         margin: auto;
         /* width: 90%; */
+        font-size:small;
     }
 
-    #member_code {width:300px;}
-    #password {width:300px;}
-    #member_name {width:300px;}
-    #address {width:300px;}
-    #mobile_no {width:300px;}
-    #sex {width:300px;}
-    #age {width:300px;}
+    #member_code {width:500px;}
+    #password {width:500px;}
+    #member_name {width:500px;}
+    #address {width:500px;}
+    #mobile_no {width:500px;}
+    #sex {width:500px;}
+    #age {width:500px;}
+    #create_date {width:500px;}
+    #stop_date {width:500px;}
+    #admin_yn {width:500px;}
 
 </style>
 <body>
 <script>
     findAll(1);
 </script>
+<div class="container mt-5 mb-5">
+<div class="row">
+<jsp:include page="../sidebar.jsp"></jsp:include>
+<div class="col-sm-10 ps-5">
 <div id="wrapper">
     <div id="alignArea">
         <span>
@@ -1136,5 +1178,6 @@
     <div id="modifyFormArea"></div>
     <br><br><br>
 </div>
+</div></div></div>
 </body>
 </html>
