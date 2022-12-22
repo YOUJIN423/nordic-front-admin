@@ -1,15 +1,14 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- Latest compiled and minified CSS -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 
-<!-- Latest compiled JavaScript -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!DOCTYPE html>
+<link rel="stylesheet" href="../css/header.css">
+<link rel="stylesheet" href="../css/footer.css">
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -20,15 +19,12 @@ td {
 	max-height: 236px;
 }
 </style>
-<div class="container mt-3">
-	<div class="mt-4 p-5 text-black rounded">
-		<h1>The Nordic</h1>
-		<p>걷기 보다 더 좋은 걷기</p>
-	</div>
-</div>
-<hr style="border: 1px color= silver; margin-left: 5%" width="90%">
 
-<body style="align-items:  center;">
+<header align="center">
+	<h1>NORDIC WALKING</h1>
+</header>
+
+<body>
 	<script>
 	//페이징 과정
 	function pageing(data,n,mode) {
@@ -73,6 +69,7 @@ td {
 		  
 	//받은 데이터 list화 시켜줌
      function paser(data,n,mode) {
+   	  let token = localStorage.getItem('wtw-token') || '';
     	 console.log("mode : "+mode);
     	  if (data.length > 0) {
           var td = $("#listTable");
@@ -125,8 +122,11 @@ td {
 	
 		//first
       function page(nowpage){
+    	  let token = localStorage.getItem('wtw-token') || '';
     	  var url = "http://localhost/api/list?pageNum="+nowpage;
-          fetch(url) 	
+          fetch(url,{headers: {
+  	        'Authorization': `Bearer \${token}`,
+  	  	}}) 	
             .then((response) => response.json())
             .then((data) => paser(data,1))
             .catch(error => noresult());
@@ -134,6 +134,7 @@ td {
 		
 		
       function changePage(nowpage,start,mode){
+    	  let token = localStorage.getItem('wtw-token') || '';
     	  $("td").remove();
     	  console.log("mode : "+mode);
     	  if(mode==search){
@@ -141,7 +142,9 @@ td {
     			var second = $("#secondval").val();
     			var fetchurl = "http://localhost/api/search?first="+first+"&second="+second+"&pageNum="+nowpage;
     			console.log(fetchurl);
-    			fetch(fetchurl)
+    			fetch(fetchurl,{headers: {
+    		        'Authorization': `Bearer \${token}`,
+    		  	}})
     			.then((response) => response.json())
     			.then((data) => paser(data,start,"search"))
     	  }else{
@@ -155,7 +158,7 @@ td {
 		
       //select에 따른 html변화
      function searchchange(){
-    	  
+   	  let token = localStorage.getItem('wtw-token') || '';
     	 var optionval= $("#searchoptions").val();
     	 console.log(optionval);
     	 if(optionval===""){
@@ -163,12 +166,12 @@ td {
     	 }
     	 
     	 if(optionval==="missionname"){
-    		 var changehtml = "<input type='text' id='firstval'> <input type='button' id='submitbutton' value='찾기' onclick='searchstart()'> "
+    		 var changehtml = "<input type='text' id='firstval'> <input class='btn btn-outline-secondary' type='button' id='submitbutton' value='찾기' onclick='searchstart()'> "
         		 $("#changearea").html(changehtml);
     	 }
     	 
     	 if(optionval==="term"){
-    		 var changehtml = "<input type='date' id='firstval' >~<input type='date' id='secondval'> <input type='button' id='submitbutton' value='찾기' onclick='searchstart()'> "
+    		 var changehtml = "<input type='date' id='firstval' >~<input type='date' id='secondval'> <input  class='btn btn-outline-secondary'type='button' id='submitbutton' value='찾기' onclick='searchstart()'> "
         		 $("#changearea").html(changehtml);
     	 }
     	 
@@ -176,6 +179,7 @@ td {
       
       //찾기 button을 누르면 작동 필요한건 nowpage와 paramter를 전달하는 방법
      function searchstart() {
+   	  let token = localStorage.getItem('wtw-token') || '';
     	  $("td").remove();
 		var first = $("#firstval").val();
 		var second = $("#secondval").val();
@@ -185,39 +189,66 @@ td {
 			//nowpage + first
 			var fetchurl = "http://localhost/api/search?first="+first+"&second="+second+"&pageNum="+1;
 			console.log(fetchurl);
-			fetch(fetchurl)
+			fetch(fetchurl,{headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	}})
 			.then((response) => response.json())
 			.then((data) => paser(data,1,"search"))
 		}else{
 			var fetchurl = "http://localhost/api/search?first="+first+"&second="+second+"&pageNum="+1;
 			console.log(fetchurl);
-			fetch(fetchurl)
+			fetch(fetchurl,{headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	}})
 			.then((response) => response.json())
 			.then((data) => paser(data,1,"search"))
 		}
 		
 	}
       $(document).ready(function () {
+    	  let token = localStorage.getItem('wtw-token') || '';
     	  page(1);
       });
     </script>
 	<input id="endpage" type="hidden">
-	<div class="container">
-		<div class="container mt-3">
-			<div id="listTable">
-				<div class="tableRow" style="max-height: 800px; min-width: 600px"></div>
-				<div class="tableRow2" style="max-height: 800px; min-width: 600px"></div>
-			</div>
-			<br>
+	<div class="container-fluid">
+		<div class="container-fluid">
+			<div class="row">
+				<jsp:include page="../sidebar.jsp"></jsp:include>
+				<div id="main-content" class="col-sm-8"
+					style="margin-left: 50px; margin-top: -10px">
+					<div id="listTable">
+						<div class="tableRow" style="max-height: 800px; min-width: 600px"></div>
+						<div class="tableRow2" style="max-height: 800px; min-width: 600px"></div>
+					</div>
 
-			<spen id="pagelist"></spen>
-			<spen id="search"> <select id="searchoptions"
-				onchange="searchchange()"><option id="" value="">검색방법을
-					선택하세요</option>
-				<option id="term" value="term">기간</option>
-				<option id="missionname" value="missionname">미션명</option></select> </spen>
-			<span id="changearea"> </span>
+					<div>
+						<spen id="pagelist"></spen>
+						<spen id="search"> <select id="searchoptions"
+							onchange="searchchange()"><option id="" value="">검색방법을
+								선택하세요</option>
+							<option id="term" value="term">기간</option>
+							<option id="missionname" value="missionname">미션명</option></select> </spen>
+						<span id="changearea"> </span>
+
+						<div id="page-button" align="center">
+							<div id="search-bar">
+								<div id="search-type"></div>
+								<div id="search-keyword"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+
+
+	<footer>
+		<center>
+			서비스 이용약관 | 개인정보 보호정책 | 청소년 보호정책<br> Copyright <strong>©노르딕워킹</strong>
+			All rights reserved.
+		</center>
+	</footer>
 </body>
 </html>

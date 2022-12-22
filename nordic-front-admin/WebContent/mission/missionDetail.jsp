@@ -9,6 +9,8 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68f650077e726d080433ae45c322df48&libraries=services,clusterer,drawing"></script>
+<link rel="stylesheet" href="../css/header.css">
+<link rel="stylesheet" href="../css/footer.css">
 <html>
 <head>
 <meta charset="UTF-8">
@@ -25,6 +27,7 @@ const tag = urlParams.get("mission_no");
 console.log("tag : "+tag);
 const update_mumber = "updatemember";
 $(document).ready(function() {
+		let token = localStorage.getItem('wtw-token') || '';
 		let mission_name = $("#mission_name");
 		let start = $("#start");
 		let end = $("#end");
@@ -37,7 +40,9 @@ $(document).ready(function() {
 
 		var fetchurl = "http://localhost/api/mission/" + tag;
 		
-		fetch(fetchurl)
+		fetch(fetchurl,{headers: {
+	        'Authorization': `Bearer \${token}`,
+	  	}})
 		.then((response)=> response.json())
 		.then((data) => html(data))
 		
@@ -55,7 +60,9 @@ $(document).ready(function() {
 			$("#here2").append(deletebutton);
 			var whileurl = "http://localhost/api/countImage/"+tag;
 	
-			fetch(whileurl)
+			fetch(whileurl,{headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	}})
 				.then((response) => response.text(data))
 				.then((data) => createImgTag(data))
 			
@@ -114,6 +121,9 @@ $(document).ready(function() {
 				$.ajax({
 					url : deleteUrl,
 					method : "delete",
+					  headers: {
+					        'Authorization': `Bearer \${token}`,
+					  	},
 					success :function(){
 						alert("삭제되었습니다.")
 						location.href = "list.jsp";
@@ -130,48 +140,61 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-	<div class="container mt-3">
-		<div class="mt-4 p-5 text-black rounded">
-			<h1>The Nordic</h1>
-			<p>걷기 보다 더 좋은 걷기</p>
-		</div>
-	</div>
-	<hr style="border: 1px color= silver; margin-left: 5%" width="90%">
+	<header align="center">
+		<h1>NORDIC WALKING</h1>
+	</header>
 
-	<div class="container mt-5 st" align="center">
-		<div class="row" align="center">
-			<div class="col-sm-4">
-				<div class="fakeimg">
-					<div id="location" style="height: 350px;"></div>
+	<div class="container-fluid mt-3">
+		<div class="container-fluid">
+			<div class="row">
+				<jsp:include page="../sidebar.jsp"></jsp:include>
+				<div id="main-content" class="col-sm-8"
+					style="margin-left: 50px; margin-top: -10px">
+					<div class="row" align="center">
+						<div class="col-sm-4">
+							<div class="fakeimg">
+								<div id="location" style="height: 350px;"></div>
+							</div>
+						</div>
+						<div class="col-sm-8"
+							style="padding-left: 5%; font-size: large; width: 600px;">
+							<label class="form-label">미션명 </label> <b id="mission_name"
+								style="font-size: larger;"></b> <br> <label
+								class="form-label">기간 </label> <b id="start"
+								style="font-size: larger;"></b> ~ <b id="end"
+								style="font-size: larger;"></b> <br> <label
+								class="form-label">난이도 </label> <b style="font-size: larger;"
+								id="level_code"></b> <br> <label class="form-label">포인트
+							</label> <b id="point" style="font-size: larger;"></b> <br> <label
+								class="form-label">주소 </label> <b id="address1"
+								style="font-size: larger;"></b> <b id="address2"
+								style="font-size: larger;"></b>
+						</div>
+						<br>
+						<div class="fakeimg">
+							<br>
+							<div id="imgplace" align="center"></div>
+						</div>
+					</div>
 				</div>
-
 			</div>
-			<div class="col-sm-8"
-				style="padding-left: 5%; font-size: large; width: 600px;">
-				<label class="form-label">미션명 </label> <b id="mission_name"
-					style="font-size: larger;"></b> <br> <label class="form-label">기간
-				</label> <b id="start" style="font-size: larger;"></b> ~ <b id="end"
-					style="font-size: larger;"></b> <br> <label class="form-label">난이도
-				</label> <b style="font-size: larger;" id="level_code"></b> <br> <label
-					class="form-label">포인트 </label> <b id="point"
-					style="font-size: larger;"></b> <br> <label class="form-label">주소
-				</label> <b id="address1" style="font-size: larger;"></b> <b id="address2"
-					style="font-size: larger;"></b>
-			</div>
-			<br>
-			<div class="fakeimg">
-				<br>
-				<div id="imgplace" align="center"></div>
-			</div>
-		</div>
-
-		<br>
-		<div align="center">
-			<b id="here1"></b> <b id="here2"></b> <input
-				class='btn btn-outline-secondary' type="button" onclick="goBack()"
-				value="글 목록">
 		</div>
 	</div>
+
+	<br>
+	<div align="center">
+		<b id="here1"></b> <b id="here2"></b> <input
+			class='btn btn-outline-secondary' type="button" onclick="goBack()"
+			value="글 목록">
+	</div>
+	</div>
+
+	<footer>
+		<center>
+			서비스 이용약관 | 개인정보 보호정책 | 청소년 보호정책<br> Copyright <strong>©노르딕워킹</strong>
+			All rights reserved.
+		</center>
+	</footer>
 </body>
 
 <!-- Modal -->

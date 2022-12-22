@@ -13,11 +13,13 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68f650077e726d080433ae45c322df48&libraries=services,clusterer,drawing"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<link rel="stylesheet" href="../css/header.css">
+<link rel="stylesheet" href="../css/footer.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 	$(document).ready(function() {
-		
+		let token = localStorage.getItem('wtw-token') || '';
 		const urlstr = window.location.href;
 		const url = new URL(urlstr);
 		const urlParams = url.searchParams;
@@ -37,7 +39,9 @@
 	
 		var gettinurl = "http://localhost/api/mission/"+tag;
 
-		fetch(gettinurl)
+		fetch(gettinurl,{headers: {
+	        'Authorization': `Bearer \${token}`,
+	  	}})
 			.then((response) => response.json())
 			.then((data)=>insertdata(data))
 			
@@ -56,11 +60,57 @@
 
 		//insert------
 		$("#submitBtn").click(function() {
+			if($("#mission_name").val()==""){
+				alert("test");
+				$("#mission_name").focus();
+				return false;
+			}
+			if($("#start_date").val()==""){
+				alert("test");
+				$("#start_date").focus();
+				return false;
+			}
+			if($("#end_date").val()==""){
+				alert("test");
+				$("#end_date").focus();
+				return false;
+			}
+			if($("#level_code").val()==""){
+				alert("test");
+				$("#level_code").focus();
+				return false;
+			}
+			if($("#point").val()==""){
+				alert("test");
+				$("#point").focus();
+				return false;
+			}
+			if($("#zip_code").val()==""){
+				alert("test");
+				$("#zip_code").focus();
+				return false;
+			}
+			if($("#address1").val()==""){
+				alert("test");
+				$("#address1").focus();
+				return false;
+			}
+			if($("#uploadfiles").val()==""){
+				alert("test");
+				$("#uploadfiles").focus();
+				return false;
+			}
+			
+			
+			
+			
 			var missioninsert = "http://localhost/api/mission/"+tag;
 			$.ajax({
 				url : missioninsert,
 				method : "put",
-				contentType : "application/json",
+				contentType : "application/json",  headers: {
+			        'Authorization': `Bearer \${token}`,
+			  	},
 				data : JSON.stringify({
 					mission_name : $("#mission_name").val(),
 					start_date : $("#start_date").val(),
@@ -77,7 +127,9 @@
 					var imageinsert = "http://localhost/api/image/MODICHANGEVALUE/"+tag;
 					$.ajax({
 						url : imageinsert ,
-						type : "put",
+						type : "put",  headers: {
+					        'Authorization': `Bearer \${token}`,
+					  	},
 						data : new FormData($("#upload-file-form")[0]),
 						enctype : 'multipart/form-data',
 						processData : false,
@@ -249,73 +301,78 @@ button:hover {
 <title>Document</title>
 </head>
 <body>
-	<div class="container mt-3">
-		<div class="mt-4 p-5 text-black rounded">
-			<h1>The Nordic</h1>
+	<header align="center">
+		<h1>NORDIC WALKING</h1>
+	</header>
+
+	<div class="container-fluid">
+		<div class="container-fluid">
+			<div class="row">
+				<jsp:include page="../sidebar.jsp"></jsp:include>
+				<div id="main-content" class="col-sm-8"
+					style="margin-left: 50px; margin-top: -10px">
+
+					<div class="main">
+
+						<form style="max-width: 400px;" id="upload-file-form"
+							enctype="multipart/form-data">
+							<div class="mb-3 mt-3">
+								<label class="form-label">미션명</label><input type="text"
+									id="mission_name" name="mission_name" class="form-control" />
+							</div>
+							<div class="mb-3 mt-3">
+								<label class="form-label">시작일</label> <input
+									class="form-control" type="date" name="start_date"
+									id="start_date">
+							</div>
+							<div class="mb-3 mt-3">
+								<label class="form-label">종료일</label> <input
+									class="form-control" type="date" name="end_date" id="end_date">
+							</div>
+							<div class="mb-3 mt-3">
+								<label class="form-label">난이도</label> <select
+									class="form-control" name="level_code" id="level_code">
+									<option value="">선택하세요</option>
+									<option value="상">상</option>
+									<option value="중">중</option>
+									<option value="하">하</option>
+								</select>
+							</div>
+							<div class="mb-3 mt-3">
+								<label class="form-label">포인트</label> <input
+									class="form-control" type="text" name="point" id="point" />
+							</div>
+							<div class="mb-3 mt-3">
+								<label class="form-label">우편번호</label> <input
+									class="form-control" type="text" size="5" maxlength="5"
+									name="zip_code" id="zip_code" /> <input class="form-control"
+									type="button" value="우편검색" onclick="openDaumPostcode()" />
+							</div>
+							<div class="mb-3 mt-3">
+								<label class="form-label">주소</label> <input class="form-control"
+									type="text" size="50" name="address1" id="address1" /> <input
+									class="form-control" type="text" size="50" name="address2"
+									id="address2" onfocus="changeevent()" />
+							</div>
+							<div colspan="2" id="map" style="width: 400px; height: 400px;"></div>
+							<div class="mb-3 mt-3">
+								<label class="form-label">사진</label> <input class="form-control"
+									type="file" multiple="multiple" name="uploadfiles"
+									id="uploadfiles">
+							</div>
+							<input class="form-control" type="button" id="submitBtn"
+								value="전송" />
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<hr style="border: 1px color= silver; margin-left: 5%" width="90%">
-
-	<div class="main">
-
-		<form style="max-width: 400px;"
-			upload-file-form"
-			enctype="multipart/form-data">
-			<div class="mb-3 mt-3">
-				<label class="form-label">미션명</label><input type="text"
-					id="mission_name" name="mission_name" class="form-control" />
-			</div>
-			<div class="mb-3 mt-3">
-				<label class="form-label">시작일</label> <input class="form-control"
-					type="date" name="start_date" id="start_date">
-			</div>
-			<div class="mb-3 mt-3">
-				<label class="form-label">종료일</label> <input class="form-control"
-					type="date" name="end_date" id="end_date">
-			</div>
-			<div class="mb-3 mt-3">
-				<label class="form-label">난이도</label> <select class="form-control"
-					name="level_code" id="level_code">
-					<option value="">선택하세요</option>
-					<option value="상">상</option>
-					<option value="중">중</option>
-					<option value="하">하</option>
-				</select>
-			</div>
-			<div class="mb-3 mt-3">
-				<label class="form-label">포인트</label> <input class="form-control"
-					type="text" name="point" id="point" />
-			</div>
-			<div class="mb-3 mt-3">
-				<label class="form-label">우편번호</label> <input class="form-control"
-					type="text" size="5" maxlength="5" name="zip_code" id="zip_code" />
-				<input class="form-control" type="button" value="우편검색"
-					onclick="openDaumPostcode()" />
-			</div>
-			<div class="mb-3 mt-3">
-				<label class="form-label">주소</label> <input class="form-control"
-					type="text" size="50" name="address1" id="address1" /> <input
-					class="form-control" type="text" size="50" name="address2"
-					id="address2" onfocus="changeevent()" />
-			</div>
-			<div colspan="2" id="map" style="width: 400px; height: 400px;"></div>
-			<div class="mb-3 mt-3">
-				<label class="form-label">사진</label> <input class="form-control"
-					type="file" multiple="multiple" name="uploadfiles" id="uploadfiles">
-			</div>
-			<input class="form-control" type="button" id="submitBtn" value="전송" />
-			<!-- <script>
-          var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-              mapOption = {
-                  center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                  level: 3 // 지도의 확대 레벨
-              };
-
-          // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-          var map = new kakao.maps.Map(mapContainer, mapOption);
-          </script> -->
-		</form>
-
-	</div>
+	<footer>
+		<center>
+			서비스 이용약관 | 개인정보 보호정책 | 청소년 보호정책<br> Copyright <strong>©노르딕워킹</strong>
+			All rights reserved.
+		</center>
+	</footer>
 </body>
 </html>
