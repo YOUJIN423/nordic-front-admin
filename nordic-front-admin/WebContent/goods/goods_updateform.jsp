@@ -23,6 +23,9 @@
             url: "http://localhost/api/goods/" + goodsNo,
             method: "get",
             contentType : "application/json",
+            headers: {
+		        'Authorization': `Bearer \${token}`,
+		  	},
             data: { },
             success: function (success) {
               console.log(success);
