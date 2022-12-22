@@ -1,6 +1,7 @@
 let sel_files = [];
 let board_no;
-let update_member;
+let token = localStorage.getItem("wtw-token");
+let update_member = localStorage.getItem("member_code");
 let create_member;
 let pre_Img;
 let image_no
@@ -74,24 +75,28 @@ $.ajax({
         $("#board_object").val(title)
         $("#content").val(desc)
 
+        let index = 1;
         for (let i = 0; i < dataList.length; i++) {
             if(dataList[i].image_use_yn == 'Y') {
                 let imgData = dataList[i]
                 pre_Img = imgData.orignal_name;
                 image_no = imgData.board_image_no;
 
-                let html = "<button type='button' onclick=\"deleteImg("+ image_no +")\" " +
+                let html = "<div id=\'uploadImg"+ index + "\'>" +
+                    "<button type='button' onclick=\"deleteImg("+ image_no +","+index+")\" " +
                     "class=\"btn btn-danger btn-sm\" style=\"font-size: 5pt;\">X</button>" +
-                    "<span>&nbsp" + pre_Img + "</span><br>"
+                    "<span>&nbsp" + pre_Img + "</span></div>"
                 $("#imgList").append(html)
 
+                index++;
             }
         }
     }
 });
 
-function deleteImg(no) {
+function deleteImg(no, index) {
     console.log('deleteImg, image_no - ' + no)
+    console.log('deleteImg, id index - ' + index)
 
     $.ajax({
         method: 'DELETE',
@@ -104,6 +109,10 @@ function deleteImg(no) {
         success: (data) => {
             console.log(data)
             alert('삭제완료!')
+
+            $('#uploadImg' + index).empty();
+
+
         }
     });
 }
@@ -134,6 +143,9 @@ function submitAction() {
         enctype: "multipart/form-data",
         data: formData,
         dataType: "json",
+        header: {
+            'Authorization': `Bearer \${token}`
+        },
         success: (result) => {
             console.log(result)
 
