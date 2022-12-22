@@ -26,7 +26,7 @@
 	        <a class="list-group-item list-group-item-action" href="member/members.jsp">가입 회원 정보</a>
 	        <a class="list-group-item"><b>리포트</b></a>
 	        <a class="list-group-item list-group-item-action" href="goods/goods_best.jsp">최다 지급 굿즈</a>
- 	        <a class="list-group-item list-group-item-action" href="<%= request.getContextPath()%>/points/top10.jsp">최다 적립 회원 TOP 10</a>
+ 	        <a class="list-group-item list-group-item-action" href="<%= request.getContextPath()%>/points/top10.jsp">최다 적립 회원</a>
 	        <a class="list-group-item list-group-item-action" href="">최다 미션 수행</a>
 	        <a class="list-group-item list-group-item-action" href="">최다 미션 수행일</a>
 	        <a class="list-group-item list-group-item-action" href="">최다 댓글 게시글</a>
