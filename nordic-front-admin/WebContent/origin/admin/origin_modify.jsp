@@ -44,11 +44,7 @@
 <div class="row">
 
   <div id="side-bar" class="col-2" style="font-size: 10pt;">
-    <div class="list-group">
-      <a class="list-group-item" href="../../intro/admin/introduce.jsp">소개</a></li>
-      <a class="list-group-item list-group-item-action" style="font-weight: bolder">기원</a></li>
-      <a class="list-group-item list-group-item-action" href="../../board/board_main.jsp">게시판</a></li>
-    </div>
+    <jsp:include page="../../sidebar.jsp"/>
   </div>
 
 <div id="main-content" class="col-sm-9" style="margin-left: 100px;">
