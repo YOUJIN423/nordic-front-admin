@@ -166,7 +166,6 @@
 	}
 	
 	/* 미션 수행 상세 정보 */
-
  	var b_no;
  	
 	function detail(no, pageNo) {
@@ -371,7 +370,7 @@
 </head>
 <body>
 	<header>
-		<h1>NORDIC WALKING</h1>
+		<a href="/nordic-front-admin/"><h1>NORDIC WALKING</h1></a>
 	</header>
 	<div class="container mt-5 mb-5">
 		<div class="row">
