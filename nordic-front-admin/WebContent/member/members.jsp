@@ -18,12 +18,16 @@
     function doModifyForm(member_code, pageNum){
 
         var url = "http://localhost/api/member/modifyForm/";
+        
+        let token = localStorage.getItem('wtw-token') || '';
+        let member_code = localStorage.getItem('member_code') || '';
 
         fetch ( url+member_code, {
             method: "GET",
             mode: 'cors',
             headers : {
-                'Content_Type' : 'application/json'
+                'Content_Type' : 'application/json',
+                'Authorization' : `Bearer \${token}`,
             }
         })
 
@@ -1080,7 +1084,7 @@
         font-size:xx-large;
         text-align: right;
         margin-top: 30px;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
     }
 
     #pageArea { text-align: center; }
