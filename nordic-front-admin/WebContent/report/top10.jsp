@@ -14,19 +14,18 @@
 
 function topRanking() {
 
-	var url = "http://localhost:80/api/points/top10";
+	var url = "http://localhost:80/api/report/top10";
 	
 	console.log (url);
 	
 	let token = localStorage.getItem('wtw-token') || '';
-	let member_code = localStorage.getItem('member_code') || '';
 	
 	fetch(url, {
 	    method: "GET",
 	    mode: 'cors',
 	    headers: {
 	    'Content-Type' : 'application/json',
-	    'Authorization' : `Bearer \${token}`
+	    'Authorization' : `Bearer \${token}`,
 	    }
 	})
 	
@@ -47,21 +46,14 @@ function topRanking() {
 	    `;
 	
 	    $("#indexArea").append(tableIndex);
-	
-	    console.log(response.data); // 정보 보기
-	    console.log("길이: " + response.data.length);
-	    console.log("키 : " + Object.keys(response.data[0]));
-	    console.log("밸류 : " + Object.values(response.data[0]));
-	    console.log(response.data[0]);
-	
+	 	
+	    console.log("에러?");
+	    console.log(response);
 	    var tableColumnL = (response.data.length);  // 행 길이
-	
-	    
 	
 	    for (var j=0; j<tableColumnL; j++) {
 	
 	        var memValues = Object.values(response.data[j]);
-	        console.log(memValues[3].toLocaleString());
 	        $("#dataArea").append(`<tr>`);
 	
 	            var i=0;

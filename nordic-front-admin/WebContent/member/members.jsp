@@ -20,7 +20,6 @@
         var url = "http://localhost/api/member/modifyForm/";
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         fetch ( url+member_code, {
             method: "GET",
@@ -183,7 +182,6 @@
         var data1 = $("#frmData").serialize();
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         $(function() {
         
@@ -210,7 +208,6 @@
         var url = "http://localhost/api/member/del/"+member_code;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         if (confirm(member_code+" 회원을 정말 강제탈퇴 처리 하시겠습니까?")) {
 
@@ -239,7 +236,6 @@
         var url = "http://localhost/api/member/members/undoDelete/"+member_code;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -472,7 +468,6 @@
         var url = "http://localhost:80/api/member/members/arg/" + arrangeBox1 + arrangeBox2 + "/" + pageNum;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         fetch(url, 
         {
@@ -661,7 +656,6 @@
         var url = "http://localhost:80/api/member/members/mst/"+ memberState + "/" + pageNum;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         fetch ( url , 
         {
@@ -854,7 +848,6 @@
         var url = "http://localhost/api/member/members/doApproval/"+member_code;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -884,7 +877,6 @@
         var url = "http://localhost/api/member/members/doAdmin/"+member_code;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -913,7 +905,6 @@
         var url = "http://localhost/api/member/members/doUnadmin/"+member_code;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         $(function(){
 
@@ -944,7 +935,6 @@
         var url = "http://localhost/api/member/members/"+search+"/"+keyword+"/"+pageNum;
         
         let token = localStorage.getItem('wtw-token') || '';
-        let member_code = localStorage.getItem('member_code') || '';
 
         fetch(url, {
             method : "GET",
