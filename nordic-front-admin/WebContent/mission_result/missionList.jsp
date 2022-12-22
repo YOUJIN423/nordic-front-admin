@@ -7,13 +7,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f18f708ab83ac158fcf9835e92a5638f&libraries=services,clusterer,drawing"></script>
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-
+<link rel="stylesheet" href="../css/header.css">
+<link rel="stylesheet" href="../css/footer.css">
 <style>
+	a {
+		text-decoration: none;
+	    color: black;
+	}
 	table td {
 		color: black
 	}
@@ -29,6 +33,7 @@
 	var sd; 			 // 기간 조회 - start_date
 	var ed; 			 // 기간 조회 - end_date
 	let token = localStorage.getItem('wtw-token') || '';
+	let member_code = localStorage.getItem('member_code') || '';
 	
 	$(document).ready(function(){
 		pageNo = 1;
@@ -69,8 +74,8 @@
 					<p><b>미승인 건 </b> : \${data.data}</p>
 				`
 				$("#count").html(count);
-			}, error : function(data) {
-				location.href = "login.jsp";
+			}, error: function(data) {
+				location.href = "../login.jsp"
 			}
  		});
 
@@ -162,7 +167,6 @@
 	}
 	
 	/* 미션 수행 상세 정보 */
-
  	var b_no;
  	
 	function detail(no, pageNo) {
@@ -211,15 +215,15 @@
 					    jsonObjVal.push(name[i][Object.keys(name[i])[0]]);
 					    
 					    var m_img = `
-					    	<img src="http://localhost:80/api/admin/mission/result/image/\${jsonObjVal[i]}" width="200px"
-					    		onerror="this.src='http://localhost:80/api/admin/mission/result/image/error.png';">
+					    	<img src="http://localhost:80/api/mission/image/\${jsonObjVal[i]}?path=missionmaster" width="200px"
+					    		onerror="this.src='http://localhost:80/api/mission/image/error.png?path=mission';">
 					    `
 					    mission_image = mission_image + m_img;
 					};
 				} else {
 					var m_img = `
-						<img src="http://localhost:80/api/admin/mission/result/image/\${master_img.confirm_file}" width="500px"
-							onerror="this.src='http://localhost:80/api/admin/mission/result/image/error.png';">
+						<img src="http://localhost:80/api/mission/image/\${master_img.confirm_file}path=missionmaster" width="500px"
+							onerror="this.src='http://localhost:80/api/mission/image/error.png?path=mission';">
 					`
 					mission_image = mission_image + m_img;
 				}
@@ -246,8 +250,8 @@
 								<p>회원 아이디: \${history.member_code}</p>
 								<p>등록일 : \${img_update_date}</p>
 							</div>
-							<img src="http://localhost:80/api/admin/mission/result/image/\${history_img.confirm_file}"
-								width="400px" class="mt-3" onerror="this.src='http://localhost:80/api/admin/mission/result/image/error.png';">
+							<img src="http://localhost:80/api/mission/image/\${history_img.confirm_file}?path=mission"
+								width="400px" class="mt-3" onerror="this.src='http://localhost:80/api/mission/image/error.png?path=mission';">
 		 					<div id="f" class="mt-5">
 			 					<form id="frm" style="width:400px">
 			 						<input type="radio" name="confirm" value="1" checked> 승인
@@ -366,9 +370,12 @@
 
 </head>
 <body>
+	<header>
+		<a href="/nordic-front-admin/"><h1>NORDIC WALKING</h1></a>
+	</header>
 	<div class="container mt-5 mb-5">
 		<div class="row">
-			<jsp:include page="sidebar.jsp"/>
+			<jsp:include page="../sidebar.jsp"/>
 			<div class="col-sm-10 ps-5">
 				<h1>미션 수행 등록 현황</h1>
 				<div id="list" class="row">
@@ -409,5 +416,9 @@
 			</div>
 		</div>
 	</div>
+	<footer align="center">
+		서비스 이용약관 | 개인정보 보호정책 | 청소년 보호정책<br> Copyright <strong>©노르딕워킹</strong>
+		All rights reserved.
+	</footer>
 </body>
 <!-- </html><div id="map" style="width:510px; height:400px; margin-left:10px" class="mt-2 text-center"></div> -->
