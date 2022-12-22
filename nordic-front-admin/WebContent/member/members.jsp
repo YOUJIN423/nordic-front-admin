@@ -1080,7 +1080,7 @@
         font-size:xx-large;
         text-align: right;
         margin-top: 30px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
 
     #pageArea { text-align: center; }
@@ -1151,6 +1151,7 @@
 
 </style>
 <body>
+<jsp:include page="../header.jsp"/>
 <script>
     findAll(1);
 </script>
@@ -1238,5 +1239,6 @@
     <br><br><br>
 </div>
 </div></div></div>
+<jsp:include page="../footer.jsp"/>
 </body>
 </html>
