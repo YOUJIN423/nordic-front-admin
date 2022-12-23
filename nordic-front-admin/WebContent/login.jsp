@@ -28,8 +28,10 @@ a {
 
 		/* 이전 페이지로 이동 */
 		var referrer = document.referrer;
-		if (referrer.includes('login')) {
-			referrer = "index.jsp";
+		if(referrer.includes('login')) {
+			referrer = "/nordic-front-admin/";	
+		} else if(referrer=='') {
+			referrer = "/nordic-front-admin/";
 		}
 
 		$.ajax({

@@ -158,6 +158,7 @@ button:hover {
 <script>
 	$(document).ready(function() {
 		let token = localStorage.getItem('wtw-token') || '';
+		let update_member = localStorage.getItem("member_code");
 		changeevent()
 		$("#submitBtn").click(function() {
 			if ($("#mission_name").val() == "") {
@@ -219,7 +220,7 @@ button:hover {
 					address1 : $("#address1").val(),
 					address2 : $("#address2").val(),
 					use_yn : "Y",
-					create_member : "changevalue",
+					create_member : update_member,
 					
 				}),
 				success : function(success) {

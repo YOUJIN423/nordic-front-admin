@@ -328,11 +328,16 @@
  			success : function(data) {
  				console.log(data);
  				list(pageNo);
- 				
+ 				var member_code = data.data.member_code;
+				var no = data.data.mission_history_no;
+				
  				/* 승인 성공 + 포인트 지급 */
  				if(data.message == "승인 성공") {
- 					fetch("http://localhost:80/api/admin/mission/result/point/add", {
+ 					fetch("http://localhost:80/api/admin/mission/result/point/add?mission_history_no="+no+"&member_code="+member_code, {
  						method: "POST",
+ 						headers : {
+ 							'Authorization': `Bearer \${token}`,
+ 						}
  					})
  					.then((response) => response.json())
  					.then((response) => console.log(response))

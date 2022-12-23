@@ -123,31 +123,31 @@ formData.append('fileOrder', new Blob([JSON.stringify(fileOrderList)], {type: "a
               img1.setAttribute("onError","this.src='noimage.png'");
               }
               else
-              img1.setAttribute("SRC","default_pic_jy.jpg");
+              img1.setAttribute("SRC","noimage.png");
               if(dt.image2 != null){
               img2.setAttribute("src","http://localhost/api/goods/image/" + dt.image2);
               img2.setAttribute("onError","this.src='noimage.png'");
               }
               else
-              img2.setAttribute("SRC","default_pic_jy.jpg");
+              img2.setAttribute("SRC","noimage.png");
               if(dt.image3 != null){
               img3.setAttribute("src","http://localhost/api/goods/image/" + dt.image3);
               img3.setAttribute("onError","this.src='noimage.png'");
               }
               else
-              img3.setAttribute("SRC","default_pic_jy.jpg");
+              img3.setAttribute("SRC","noimage.png");
               if(dt.image4 != null){
               img4.setAttribute("src","http://localhost/api/goods/image/" + dt.image4);
               img4.setAttribute("onError","this.src='noimage.png'");
               }
               else
-              img4.setAttribute("SRC","default_pic_jy.jpg");
+              img4.setAttribute("SRC","noimage.png");
               if(dt.image5 != null){
               img5.setAttribute("src","http://localhost/api/goods/image/" + dt.image5);
               img5.setAttribute("onError","this.src='noimage.png'");
               }
               else
-              img5.setAttribute("SRC","default_pic_jy.jpg");
+              img5.setAttribute("SRC","noimage.png");
           }
 
       function readURL(input, i) {
