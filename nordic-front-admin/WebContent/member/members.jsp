@@ -354,7 +354,7 @@
                         var asd = `<button class="btn btn-outline-dark btn-sm" style="border:0;"  onClick = " location.href='memberInfo.html' ">${memValues[i]}</button>`;
                     }   // 회원 이름을 클릭하면 활동 내역을 볼 수 있는 페이지로 연결 */
 
-                    // 탈퇴한 회원일 경우 취소선 적용
+                 	// 탈퇴한 회원일 경우 취소선 적용
                     if (response.data.list[j].stop_yn == 'Y' &&
                         response.data.list[j].admin_yn == 'N' &&
                         response.data.list[j].approval_yn == 'N') {
@@ -363,16 +363,19 @@
                     // 일반 회원일 경우 아무런 서식 적용 없음
                     } else if (response.data.list[j].stop_yn == 'N' &&
                                response.data.list[j].admin_yn == 'N' &&
-                               response.data.list[j].approval_yn == 'N') {
+                               response.data.list[j].admin_yn == 'N' ) {
                         var tdValue = `<td>`;
-
+                    } else if (response.data.list[j].stop_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'Y' ) {
+                      var tdValue = `<td>`;
+                    
                     // 관리자 회원일 경우 굵게 빨간 글씨
                     } else if (response.data.list[j].stop_yn == 'N' &&
                                response.data.list[j].admin_yn == 'Y' &&
                                response.data.list[j].approval_yn == 'Y')  {
                         var tdValue = `<td id="adminFormat">`;
                     }
-                    // 탈퇴한 회원일 경우 취소선 적용
 
                     var data = `\${tdValue}\${asd}</td>`;
                     i++;
@@ -544,7 +547,7 @@
                         var asd = `<button class="btn btn-outline-dark btn-sm" style="border:0;"  onClick = " location.href='memberInfo.html' ">${memValues[i]}</button>`;
                     }   // 회원 이름을 클릭하면 활동 내역을 볼 수 있는 페이지로 연결 */
 
-                    // 탈퇴한 회원일 경우 취소선 적용
+                 	// 탈퇴한 회원일 경우 취소선 적용
                     if (response.data.list[j].stop_yn == 'Y' &&
                         response.data.list[j].admin_yn == 'N' &&
                         response.data.list[j].approval_yn == 'N') {
@@ -553,16 +556,19 @@
                     // 일반 회원일 경우 아무런 서식 적용 없음
                     } else if (response.data.list[j].stop_yn == 'N' &&
                                response.data.list[j].admin_yn == 'N' &&
-                               response.data.list[j].approval_yn == 'N') {
+                               response.data.list[j].admin_yn == 'N' ) {
                         var tdValue = `<td>`;
-
+                    } else if (response.data.list[j].stop_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'Y' ) {
+                      var tdValue = `<td>`;
+                    
                     // 관리자 회원일 경우 굵게 빨간 글씨
                     } else if (response.data.list[j].stop_yn == 'N' &&
                                response.data.list[j].admin_yn == 'Y' &&
                                response.data.list[j].approval_yn == 'Y')  {
                         var tdValue = `<td id="adminFormat">`;
                     }
-                    // 탈퇴한 회원일 경우 취소선 적용
 
                     var data = `\${tdValue}\${asd}</td>`;
                     i++;
@@ -730,7 +736,7 @@
                     	}
                     } // 회원 등급 : 일반 회원, 관리자, 승인 대기
                     
-                 // 탈퇴한 회원일 경우 취소선 적용
+                 	// 탈퇴한 회원일 경우 취소선 적용
                     if (response.data.list[j].stop_yn == 'Y' &&
                         response.data.list[j].admin_yn == 'N' &&
                         response.data.list[j].approval_yn == 'N') {
@@ -738,16 +744,20 @@
                     
                     // 일반 회원일 경우 아무런 서식 적용 없음
                     } else if (response.data.list[j].stop_yn == 'N' &&
+                               response.data.list[j].admin_yn == 'N' &&
                                response.data.list[j].admin_yn == 'N' ) {
                         var tdValue = `<td>`;
-
+                    } else if (response.data.list[j].stop_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'Y' ) {
+                      var tdValue = `<td>`;
+                    
                     // 관리자 회원일 경우 굵게 빨간 글씨
                     } else if (response.data.list[j].stop_yn == 'N' &&
                                response.data.list[j].admin_yn == 'Y' &&
                                response.data.list[j].approval_yn == 'Y')  {
                         var tdValue = `<td id="adminFormat">`;
                     }
-                    // 탈퇴한 회원일 경우 취소선 적용
 
                     var data = `\${tdValue}\${asd}</td>`;
                     i++;
@@ -1009,7 +1019,7 @@
                         var asd = `<button class="btn btn-outline-dark btn-sm" style="border:0;"  onClick = " location.href='memberInfo.html' ">${memValues[i]}</button>`;
                     }   // 회원 이름을 클릭하면 활동 내역을 볼 수 있는 페이지로 연결 */
 
-                    // 탈퇴한 회원일 경우 취소선 적용
+                 	// 탈퇴한 회원일 경우 취소선 적용
                     if (response.data.list[j].stop_yn == 'Y' &&
                         response.data.list[j].admin_yn == 'N' &&
                         response.data.list[j].approval_yn == 'N') {
@@ -1018,16 +1028,19 @@
                     // 일반 회원일 경우 아무런 서식 적용 없음
                     } else if (response.data.list[j].stop_yn == 'N' &&
                                response.data.list[j].admin_yn == 'N' &&
-                               response.data.list[j].approval_yn == 'N') {
+                               response.data.list[j].admin_yn == 'N' ) {
                         var tdValue = `<td>`;
-
+                    } else if (response.data.list[j].stop_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'N' &&
+                             response.data.list[j].admin_yn == 'Y' ) {
+                      var tdValue = `<td>`;
+                    
                     // 관리자 회원일 경우 굵게 빨간 글씨
                     } else if (response.data.list[j].stop_yn == 'N' &&
                                response.data.list[j].admin_yn == 'Y' &&
                                response.data.list[j].approval_yn == 'Y')  {
                         var tdValue = `<td id="adminFormat">`;
                     }
-                    // 탈퇴한 회원일 경우 취소선 적용
 
                     var data = `\${tdValue}\${asd}</td>`;
                     i++;

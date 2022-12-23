@@ -1,6 +1,6 @@
 let sel_files = [];
 let board_no;
-let token = localStorage.getItem("wtw-token");
+let token = localStorage.getItem("wtw-token") || '';
 let update_member = localStorage.getItem("member_code");
 let create_member;
 let pre_Img;
@@ -118,7 +118,10 @@ function deleteImg(no, index) {
 }
 
 function submitAction() {
-
+	
+	let token = localStorage.getItem('wtw-token') || '';
+	let update_member = localStorage.getItem("member_code");
+	console.log(token);
     let formData = new FormData();
     let data = {
         "board_no"     : board_no,
@@ -138,14 +141,14 @@ function submitAction() {
     $.ajax({
         type: "PUT",
         url: "http://localhost:80/api/intro/" + board_no,
+        headers : {
+			'Authorization' : `Bearer \${token}`,
+		},
         contentType: false,
         processData: false,
         enctype: "multipart/form-data",
         data: formData,
         dataType: "json",
-        header: {
-            'Authorization': `Bearer \${token}`
-        },
         success: (result) => {
             console.log(result)
 

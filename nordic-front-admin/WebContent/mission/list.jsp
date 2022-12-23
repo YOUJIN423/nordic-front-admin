@@ -124,6 +124,7 @@ td {
       function page(nowpage){
     	  let token = localStorage.getItem('wtw-token') || '';
     	  var url = "http://localhost/api/list?pageNum="+nowpage;
+    	  console.log("url"+url);
           fetch(url,{headers: {
   	        'Authorization': `Bearer \${token}`,
   	  	}}) 	
