@@ -25,7 +25,9 @@ a {
 		/* 이전 페이지로 이동 */
 		var referrer = document.referrer;
 		if(referrer.includes('login')) {
-			referrer = "missionList.jsp";	
+			referrer = "/nordic-front-admin/";	
+		} else if(referrer=='') {
+			referrer = "/nordic-front-admin/";
 		}
 		
 		$.ajax({
