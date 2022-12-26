@@ -60,49 +60,46 @@
 
 		//insert------
 		$("#submitBtn").click(function() {
-			if($("#mission_name").val()==""){
-				alert("test");
+			if ($("#mission_name").val() == "") {
+				alert("이름을 입력하세요");
 				$("#mission_name").focus();
 				return false;
 			}
-			if($("#start_date").val()==""){
-				alert("test");
+			if ($("#start_date").val() == "") {
+				alert("미션 시작 날짜를 입력하세요");
 				$("#start_date").focus();
 				return false;
 			}
-			if($("#end_date").val()==""){
-				alert("test");
+			if ($("#end_date").val() == "") {
+				alert("미션 종료 날짜를 입력하세요");
 				$("#end_date").focus();
 				return false;
 			}
-			if($("#level_code").val()==""){
-				alert("test");
+			if ($("#level_code").val() == "") {
+				alert("난이도를 설정해 주세요");
 				$("#level_code").focus();
 				return false;
 			}
-			if($("#point").val()==""){
-				alert("test");
+			if ($("#point").val() == "") {
+				alert("포인트를 설정해 주세요");
 				$("#point").focus();
 				return false;
 			}
-			if($("#zip_code").val()==""){
-				alert("test");
+			if ($("#zip_code").val() == "") {
+				alert("우편번호를 입력해 주세요");
 				$("#zip_code").focus();
 				return false;
 			}
-			if($("#address1").val()==""){
-				alert("test");
+			if ($("#address1").val() == "") {
+				alert("주소를 입력해 주세요");
 				$("#address1").focus();
 				return false;
 			}
-			if($("#uploadfiles").val()==""){
-				alert("test");
+			if ($("#uploadfiles").val() == "") {
+				alert("사진이 없습니다");
 				$("#uploadfiles").focus();
 				return false;
 			}
-			
-			
-			
 			
 			var missioninsert = "http://localhost/api/mission/"+tag;
 			$.ajax({

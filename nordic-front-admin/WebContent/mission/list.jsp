@@ -33,7 +33,7 @@ td {
   	  reallastpage = $("#endpage").val();
   	  let start =  ((n-1)*10)+1; 
   	  let lastpage = $("#endpage").val();
-  	  
+  	  console.log(lastpage);
   	  let end = start+9;
   	  var pagestr = "";
   	  var first = "";
@@ -48,7 +48,7 @@ td {
   			  if(start != end){
   	      		  pagestr = pagestr+"<input class='btn btn-outline-secondary' id='inputremote' type='button' onclick='changePage("+start+","+(parseInt(start/10)+1)+","+mode+")' value='"+start+"'>";
   	  		  }else{
-  	      		  pagestr = pagestr+"<input class='btn btn-outline-secondary' id='inputremote' type='button' onclick='changePage("+start+","+(parseInt((start-10)/10)+1)+","+mode+")' value='["+start+"]'>";
+  	      		  pagestr = pagestr+"<input class='btn btn-outline-secondary' id='inputremote' type='button' onclick='changePage("+start+","+(parseInt((start-10)/10)+1)+","+mode+")' value='"+start+"'>";
   	  		  }
   		  }
   	  }else{ //총 페이지보다 마지막 페이지가 작은 경우 10개를 추출해야 한다
@@ -61,7 +61,7 @@ td {
   			}
   	  }
   	  if(end<reallastpage){ //마지막 페이지로 이동하는 버튼 추가 
-  		  last = last+ "<input class='btn btn-outline-secondary' type='button' onclick='changePage("+start+","+(parseInt(lastpage/10))+","+mode+")' value='다음'>"+"<input class='btn btn-outline-secondary' type='button' onclick='changePage("+lastpage+","+(parseInt(lastpage/8))+","+mode+")' value='끝'>";  
+  		  last = last+ "<input class='btn btn-outline-secondary' type='button' onclick='changePage("+start+","+(parseInt(lastpage/10)+1)+","+mode+")' value='다음'>"+"<input class='btn btn-outline-secondary' type='button' onclick='changePage("+lastpage+","+(parseInt(lastpage/10)+1)+","+mode+")' value='끝'>";  
   	  }
   	  var total = first + pagestr + last;
   	  $("#pagelist").html(total);
@@ -142,7 +142,7 @@ td {
     			var first = $("#firstval").val();
     			var second = $("#secondval").val();
     			var fetchurl = "http://localhost/api/search?first="+first+"&second="+second+"&pageNum="+nowpage;
-    			console.log(fetchurl);
+    			console.log("fetchurl"+fetchurl);
     			fetch(fetchurl,{headers: {
     		        'Authorization': `Bearer \${token}`,
     		  	}})
@@ -150,6 +150,7 @@ td {
     			.then((data) => paser(data,start,"search"))
     	  }else{
     	  var url = "http://localhost/api/list?pageNum="+nowpage;
+    	  console.log("url : "+url)
           fetch(url)
             .then((response) => response.json())
             .then((data) => paser(data,start,"list") )
@@ -161,7 +162,7 @@ td {
      function searchchange(){
    	  let token = localStorage.getItem('wtw-token') || '';
     	 var optionval= $("#searchoptions").val();
-    	 console.log(optionval);
+    	 console.log("optionval : "+optionval);
     	 if(optionval===""){
     		 $("#changearea").html("");
     	 }

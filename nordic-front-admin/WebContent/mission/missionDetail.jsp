@@ -115,6 +115,7 @@ $(document).ready(function() {
 		}
 		
 		function deleteButton() {
+			let token = localStorage.getItem('wtw-token') || '';
 			var confirmMessage= $("#confirmMessage").val();
 			if(confirmMessage==="지금삭제"){
 				var deleteUrl = "http://localhost/api/mission/"+tag+"/"+update_mumber;
